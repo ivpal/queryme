@@ -39,8 +39,11 @@ class CreateQuestionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropForeign('questions_category_id_foreign');
-        Schema::dropForeign('questions_user_id_foreign');
+        Schema::table('questions', function (Blueprint $table) {
+            $table->dropForeign('questions_category_id_foreign');
+            $table->dropForeign('questions_user_id_foreign');
+        });
+
         Schema::dropIfExists('questions');
     }
 }

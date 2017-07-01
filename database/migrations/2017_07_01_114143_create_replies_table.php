@@ -39,8 +39,11 @@ class CreateRepliesTable extends Migration
      */
     public function down()
     {
-        Schema::dropForeign('replies_question_id_foreign');
-        Schema::dropForeign('replies_user_id_foreign');
+        Schema::table('replies', function (Blueprint $table) {
+            $table->dropForeign('replies_question_id_foreign');
+            $table->dropForeign('replies_user_id_foreign');
+        });
+
         Schema::dropIfExists('replies');
     }
 }

@@ -13,6 +13,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property string username
  * @property string banner
  * @property string avatar
+ * @property int vk_id
+ * @property int ok_id
+ * @property int facebook_id
  * @property Question[] questions
  * @property Reply[] replies
  * @property Carbon created_at
