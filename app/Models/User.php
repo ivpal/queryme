@@ -14,6 +14,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property string banner
  * @property string avatar
  * @property Question[] questions
+ * @property Reply[] replies
  * @property Carbon created_at
  * @property Carbon updated_at
  */
@@ -36,5 +37,13 @@ class User extends Authenticatable
     public function questions()
     {
         return $this->hasMany(Question::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
     }
 }

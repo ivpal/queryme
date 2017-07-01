@@ -6,19 +6,18 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Question
+ * Class Reply
  * @package App\Models
  * @property int id
  * @property string content
+ * @property int question_id
  * @property int user_id
- * @property int category_id
+ * @property Question question
  * @property User user
- * @property Category category
- * @property Reply[] replies
  * @property Carbon created_at
  * @property Carbon updated_at
  */
-class Question extends Model
+class Reply extends Model
 {
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -31,16 +30,8 @@ class Question extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function category()
+    public function question()
     {
-        return $this->belongsTo(Category::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function replies()
-    {
-        return $this->hasMany(Reply::class);
+        return $this->belongsTo(Question::class);
     }
 }
