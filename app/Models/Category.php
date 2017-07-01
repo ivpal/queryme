@@ -10,9 +10,17 @@ use Illuminate\Database\Eloquent\Model;
  * @package App\Models
  * @property int id
  * @property string name
+ * @property Question[] questions
  * @property Carbon created_at
  * @property Carbon updated_at
  */
 class Category extends Model
 {
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
 }

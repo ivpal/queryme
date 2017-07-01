@@ -9,12 +9,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 /**
  * Class User
  * @package App\Models
- * @property int id;
- * @property string username;
- * @property string banner;
- * @property string avatar;
- * @property Carbon created_at;
- * @property Carbon updated_at;
+ * @property int id
+ * @property string username
+ * @property string banner
+ * @property string avatar
+ * @property Question[] questions
+ * @property Carbon created_at
+ * @property Carbon updated_at
  */
 class User extends Authenticatable
 {
@@ -28,4 +29,12 @@ class User extends Authenticatable
     protected $fillable = [
         'username', 'banner', 'avatar',
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
 }
