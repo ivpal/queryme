@@ -1,0 +1,61 @@
+version: '2'
+
+services:
+
+  application:
+    image: tianon/true
+    volumes:
+      - ../:/var/www
+
+  workspace:
+    build:
+      context: ./workspace
+      args:
+        - PUID=1000
+        - PGID=1000
+        - TZ=UTC
+    volumes_from:
+      - application
+    tty: true
+
+  php-fpm:
+    build:
+      context: ./php-fpm
+    volumes_from:
+      - application
+    expose:
+      - "9000"
+    links:
+      - workspace
+
+  nginx:
+    build:
+      context: ./nginx
+      args:
+        - PHP_UPSTREAM=php-fpm
+    volumes_from:
+      - application
+    volumes:
+      - ./logs/nginx/:/var/log/nginx
+      - ./nginx/sites/:/etc/nginx/sites-available
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - php-fpm
+
+  postgres:
+    build:
+      context: ./postgres
+    environment:
+      - POSTGRES_DB=queryme
+      - POSTGRES_USER=queryme
+      - POSTGRES_PASSWORD=queryme
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres:
+    driver: "local"
