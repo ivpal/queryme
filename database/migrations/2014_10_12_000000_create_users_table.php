@@ -15,9 +15,9 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('vk_id')->nullable();
-            $table->integer('ok_id')->nullable();
             $table->bigInteger('facebook_id')->nullable();
+            $table->integer('vkontakte_id')->nullable();
+            $table->integer('odnoklassniki_id')->nullable();
             $table->string('username')->unique();
             $table->string('banner')->nullable();
             $table->string('avatar')->nullable();

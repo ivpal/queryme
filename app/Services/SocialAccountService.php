@@ -3,8 +3,10 @@
 namespace App\Services;
 
 use Laravel\Socialite\Facades\Socialite;
+use Laravel\Socialite\Contracts\User as ProviderUser;
 
 use App\Models\User;
+use App\Services\SocialAccount\Info\FetcherFactory;
 
 /**
  * Class SocialAccountService
@@ -18,7 +20,7 @@ class SocialAccountService
      */
     public function getOrCreate(string $provider): User
     {
-        /** @var User $providerUser */
+        /** @var ProviderUser $providerUser */
         $providerUser = Socialite::driver($provider)->user();
         $user = User::where("{$provider}_id", $providerUser->getId())->first();
 
@@ -26,7 +28,12 @@ class SocialAccountService
             return $user;
         } else {
             $username = $providerUser->getNickname() ?: $providerUser->getId();
+
+            $fetcher = FetcherFactory::create($provider, $providerUser);
+            $banner = $fetcher->loadBanner();
+
             $user = User::create([
+                'banner'         => $banner,
                 'username'       => $username,
                 "{$provider}_id" => $providerUser->getId(),
             ]);
