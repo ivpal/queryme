@@ -20,18 +20,18 @@ abstract class Fetcher
     public abstract function getAvatarUrl(): string;
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function loadBanner(): string
+    public function loadBanner(): ?string
     {
         $bannerUrl = $this->getBannerUrl();
-        return $this->loadImage('banner', $bannerUrl);
+        return $bannerUrl ? $this->loadImage('banner', $bannerUrl) : null;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function loadAvatar(): string
+    public function loadAvatar(): ?string
     {
         $bannerUrl = $this->getAvatarUrl();
         return $this->loadImage('avatar', $bannerUrl);
@@ -45,7 +45,7 @@ abstract class Fetcher
     private function loadImage(string $type, string $url): string
     {
         $fileName = Uuid::generate(4);
-        $content = file_get_contents($url);
+        $content = file_get_contents($url); // TODO: check content
         Storage::disk('public')->put("{$type}s/" . $fileName . '.jpg', $content);
         return $fileName;
     }
