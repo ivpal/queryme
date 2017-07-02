@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
 use App\Http\Controllers\Controller;
-use App\Services\SocialAccountService;
+use App\Services\SocialAccount\UserService;
 
 /**
  * Class SocialController
@@ -25,11 +25,11 @@ class SocialController extends Controller
     }
 
     /**
-     * @param SocialAccountService $service
+     * @param UserService $service
      * @param $provider
      * @return Response
      */
-    public function handleProviderCallback(SocialAccountService $service, $provider)
+    public function handleProviderCallback(UserService $service, $provider)
     {
         $user = $service->getOrCreate($provider);
         Auth::login($user);
