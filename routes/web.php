@@ -8,6 +8,5 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-$fbCallback = env('FACEBOOK_REDIRECT');
-Route::get('/fb_redirect', 'Auth\FacebookLoginController@redirect');
-Route::get("/{$fbCallback}", 'Auth\FacebookLoginController@callback');
+Route::get('auth/{provider}', 'Auth\SocialController@redirectToProvider');
+Route::get('auth/{provider}/callback', 'Auth\SocialController@handleProviderCallback');

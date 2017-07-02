@@ -49,4 +49,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Reply::class);
     }
+
+    public function setAttribute($key, $value)
+    {
+        $isRememberTokenAttribute = $key == $this->getRememberTokenName();
+        if (!$isRememberTokenAttribute) {
+            parent::setAttribute($key, $value);
+        }
+    }
+
+
 }
