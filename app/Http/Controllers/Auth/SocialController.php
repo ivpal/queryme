@@ -35,4 +35,13 @@ class SocialController extends Controller
         Auth::login($user);
         return redirect('/');
     }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('/');
+    }
 }
