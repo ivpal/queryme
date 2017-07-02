@@ -25,10 +25,7 @@ abstract class Fetcher
     public function loadBanner(): string
     {
         $bannerUrl = $this->getBannerUrl();
-        $fileName = Uuid::generate(4);
-        $content = file_get_contents($bannerUrl);
-        Storage::disk('public')->put('banners/' . $fileName . '.jpg', $content);
-        return $fileName;
+        return $this->loadImage('banner', $bannerUrl);
     }
 
     /**
@@ -36,6 +33,20 @@ abstract class Fetcher
      */
     public function loadAvatar(): string
     {
-        return '';
+        $bannerUrl = $this->getAvatarUrl();
+        return $this->loadImage('avatar', $bannerUrl);
+    }
+
+    /**
+     * @param string $type
+     * @param string $url
+     * @return string
+     */
+    private function loadImage(string $type, string $url): string
+    {
+        $fileName = Uuid::generate(4);
+        $content = file_get_contents($url);
+        Storage::disk('public')->put("{$type}s/" . $fileName . '.jpg', $content);
+        return $fileName;
     }
 }

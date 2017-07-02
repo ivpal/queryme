@@ -34,6 +34,6 @@ class FacebookFetcher extends Fetcher
      */
     public function getAvatarUrl(): string
     {
-        return '';
+        return $this->client->getLargeAvatarUrl();
     }
 }

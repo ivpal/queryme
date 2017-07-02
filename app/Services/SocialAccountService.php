@@ -31,8 +31,10 @@ class SocialAccountService
 
             $fetcher = FetcherFactory::create($provider, $providerUser);
             $banner = $fetcher->loadBanner();
+            $avatar = $fetcher->loadAvatar();
 
             $user = User::create([
+                'avatar'         => $avatar,
                 'banner'         => $banner,
                 'username'       => $username,
                 "{$provider}_id" => $providerUser->getId(),

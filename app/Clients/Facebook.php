@@ -69,4 +69,14 @@ class Facebook implements Social
         $responseData = json_decode($response->getBody()->getContents(), true);
         return $responseData['cover']['source'];
     }
+
+    /**
+     * Get avatar image url with large format.
+     *
+     * @return string
+     */
+    public function getLargeAvatarUrl(): string
+    {
+        return "{$this->graphUrl}/{$this->version}/{$this->userId}/picture?type=large";
+    }
 }
