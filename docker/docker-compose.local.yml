@@ -7,7 +7,7 @@ services:
     volumes:
       - ../:/var/www
 
-  workspace:
+  qm_workspace:
     build:
       context: ./workspace
       args:
@@ -18,7 +18,7 @@ services:
       - application
     tty: true
 
-  php-fpm:
+  qm_php-fpm:
     build:
       context: ./php-fpm
     volumes_from:
@@ -26,13 +26,13 @@ services:
     expose:
       - "9000"
     links:
-      - workspace
+      - qm_workspace
 
-  nginx:
+  qm_nginx:
     build:
       context: ./nginx
       args:
-        - PHP_UPSTREAM=php-fpm
+        - PHP_UPSTREAM=qm_php-fpm
     volumes_from:
       - application
     volumes:
@@ -42,9 +42,9 @@ services:
       - "80:80"
       - "443:443"
     links:
-      - php-fpm
+      - qm_php-fpm
 
-  db:
+  qm_db:
     build:
       context: ./postgres
     environment:
@@ -52,10 +52,10 @@ services:
       - POSTGRES_USER=queryme
       - POSTGRES_PASSWORD=queryme
     volumes:
-      - db:/var/lib/postgresql/data
+      - qm_db:/var/lib/postgresql/data
     ports:
       - "5432:5432"
 
 volumes:
-  db:
+  qm_db:
     driver: "local"
