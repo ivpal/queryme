@@ -13,6 +13,10 @@
         <nav-header></nav-header>
 
         @yield('content')
+
+        <modal name="login">
+            Login
+        </modal>
     </div>
     <script>
         window.Queryme = {!! json_encode(['csrfToken' => csrf_token()]) !!}

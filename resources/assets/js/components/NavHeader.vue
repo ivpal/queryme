@@ -9,7 +9,7 @@
                     </li>
                 </ul>
                 <div class="my-2 my-md-0">
-                    <span class="login">Вход</span>
+                    <span class="login" v-if="canShowLogin()" v-on:click="showLoginWindow">Вход</span>
                 </div>
             </div>
         </div>
@@ -17,4 +17,14 @@
 </template>
 
 <script>
+    export default {
+      methods: {
+        canShowLogin() {
+          return Queryme.Auth == undefined;
+        },
+        showLoginWindow() {
+          this.$modal.show('login');
+        }
+      }
+    }
 </script>
