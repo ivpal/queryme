@@ -6,9 +6,47 @@
 }
 
 @import "variables";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "node_modules/bootstrap/scss/bootstrap";
 
-body {
-  font-family: Lato, sans-serif;
-  background-color: $body-bg;
+.header {
+  border-bottom: 1px solid $app-border-color;
+  background-color: #fff;
+  height: 60px;
+}
+
+a {
+  &:hover {
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+
+// NavHeader
+
+.header {
+  .nav-link {
+    color: $nav-item-color;
+    line-height: 3rem;
+
+    &:hover {
+      color: $brand-primary;
+    }
+  }
+}
+
+.brand-link {
+  &:hover {
+    color: $brand-primary;
+  }
+}
+
+.login {
+  color: $brand-primary;
+  cursor: pointer;
+  line-height: 4rem;
+  vertical-align: middle;
+
+  &:hover {
+    color: $brand-primary-hover;
+  }
 }

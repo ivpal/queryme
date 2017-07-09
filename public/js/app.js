@@ -768,27 +768,12 @@ module.exports = g;
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
 __webpack_require__(29);
 
-window.Vue = __webpack_require__(37);
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-Vue.component('example', __webpack_require__(34));
+Vue.component('nav-header', __webpack_require__(34));
 
 var app = new Vue({
-  el: '#app'
+    el: '#app'
 });
 
 /***/ }),
@@ -1640,10 +1625,8 @@ module.exports = function spread(callback) {
 
 /***/ }),
 /* 28 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
@@ -1660,12 +1643,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {
-        console.log('Component mounted.');
-    }
-});
+//
+//
 
 /***/ }),
 /* 29 */
@@ -1692,6 +1671,7 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
+window.Vue = __webpack_require__(37);
 window.axios = __webpack_require__(10);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -31664,9 +31644,9 @@ var Component = __webpack_require__(35)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/resources/assets/js/components/Example.vue"
+Component.options.__file = "/var/www/resources/assets/js/components/NavHeader.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] Example.vue: functional components are not supported with templates, they should use render functions.")}
+if (Component.options.functional) {console.error("[vue-loader] NavHeader.vue: functional components are not supported with templates, they should use render functions.")}
 
 /* hot reload */
 if (false) {(function () {
@@ -31675,9 +31655,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-76d0ccfb", Component.options)
+    hotAPI.createRecord("data-v-1acb203e", Component.options)
   } else {
-    hotAPI.reload("data-v-76d0ccfb", Component.options)
+    hotAPI.reload("data-v-1acb203e", Component.options)
   }
 })()}
 
@@ -31748,25 +31728,37 @@ module.exports = function normalizeComponent (
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _vm._m(0)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
+  return _c('nav', {
+    staticClass: "navbar navbar-toggleable-md header"
+  }, [_c('div', {
     staticClass: "container"
-  }, [_c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-8 col-md-offset-2"
-  }, [_c('div', {
-    staticClass: "panel panel-default"
-  }, [_c('div', {
-    staticClass: "panel-heading"
-  }, [_vm._v("Example Component")]), _vm._v(" "), _c('div', {
-    staticClass: "panel-body"
-  }, [_vm._v("\n                    I'm an example component!\n                ")])])])])])
+  }, [_c('a', {
+    staticClass: "navbar-brand brand-link",
+    attrs: {
+      "href": "/"
+    }
+  }, [_vm._v("Queryme")]), _vm._v(" "), _c('div', {
+    staticClass: "collapse navbar-collapse"
+  }, [_c('ul', {
+    staticClass: "navbar-nav mr-auto"
+  }, [_c('li', {
+    staticClass: "nav-item"
+  }, [_c('a', {
+    staticClass: "nav-link",
+    attrs: {
+      "href": "/discover"
+    }
+  }, [_vm._v("Discover")])])]), _vm._v(" "), _c('div', {
+    staticClass: "my-2 my-md-0"
+  }, [_c('span', {
+    staticClass: "login"
+  }, [_vm._v("Вход")])])])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-76d0ccfb", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-1acb203e", module.exports)
   }
 }
 
