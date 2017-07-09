@@ -1,9 +1,14 @@
+@font-face {
+  font-family: Lato;
+  src: url('../fonts/Lato-Bold.ttf');
+  src: url('../fonts/Lato-Regular.ttf');
+  src: url('../fonts/Lato-Semibold.ttf');
+}
 
-// Fonts
-@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
-
-// Variables
 @import "variables";
-
-// Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+body {
+  font-family: Lato, sans-serif;
+  background-color: $body-bg;
+}
