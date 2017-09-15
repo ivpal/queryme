@@ -15,7 +15,14 @@
         @yield('content')
 
         <modal name="login">
-            Login
+            <div class="login_buttons_wrapper">
+                <div class="login_buttons">
+                    <div class="login_button fb_large_login">
+                        <span class="fb_icon"></span>
+                        <a class="login_right_side" href="/auth/facebook">Вход с помощью Facebook</a>
+                    </div>
+                </div>
+            </div>
         </modal>
     </div>
     <script>
