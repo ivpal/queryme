@@ -33,7 +33,7 @@ services:
     build:
       context: ./nginx
       args:
-        - PHP_UPSTREAM=php-fpm
+        - PHP_UPSTREAM=qm_php-fpm
     volumes:
       - ../:/var/www
       - ./logs/nginx/:/var/log/nginx
