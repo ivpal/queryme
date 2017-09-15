@@ -11,6 +11,9 @@ RUN apt-get update && \
 RUN docker-php-ext-install mcrypt
 RUN docker-php-ext-install pdo_pgsql
 
+RUN pecl install xdebug && docker-php-ext-enable xdebug
+COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+
 ADD ./queryme.ini /usr/local/etc/php/conf.d
 ADD ./queryme.pool.conf /usr/local/etc/php-fpm.d/
 

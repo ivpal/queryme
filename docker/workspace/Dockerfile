@@ -56,6 +56,8 @@ USER docker
 
 RUN composer global install
 
+# Install Node
+
 ENV NVM_DIR /home/docker/.nvm
 ENV NODE_VERSION stable
 
@@ -68,7 +70,9 @@ RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh
 
 RUN echo "" >> ~/.bashrc && \
     echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc && \
-    echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm' >> ~/.bashrc
+    echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"' >> ~/.bashrc
+
+# Clean
 
 USER root
 RUN apt-get clean && \

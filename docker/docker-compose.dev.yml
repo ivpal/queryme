@@ -1,41 +1,41 @@
-version: '2'
+version: '3'
 
 services:
 
-  application:
-    image: tianon/true
-    volumes:
-      - ../:/var/www
-
   qm_workspace:
+    restart: always
     build:
       context: ./workspace
       args:
         - PUID=1000
         - PGID=1000
         - TZ=UTC
-    volumes_from:
-      - application
+    volumes:
+      - ../:/var/www
+    env_file: env.dev
     tty: true
 
   qm_php-fpm:
-    build:
-      context: ./php-fpm
-    volumes_from:
-      - application
+    restart: always
+    build: ./php-fpm
+    volumes:
+      - ../:/var/www
     expose:
       - "9000"
     links:
       - qm_workspace
+    env_file: env.dev
+    extra_hosts:
+      - "dockerhost:172.17.0.1"
 
   qm_nginx:
+    restart: always
     build:
       context: ./nginx
       args:
-        - PHP_UPSTREAM=qm_php-fpm
-    volumes_from:
-      - application
+        - PHP_UPSTREAM=php-fpm
     volumes:
+      - ../:/var/www
       - ./logs/nginx/:/var/log/nginx
       - ./nginx/sites/:/etc/nginx/sites-available
     ports:
@@ -45,17 +45,14 @@ services:
       - qm_php-fpm
 
   qm_db:
-    build:
-      context: ./postgres
-    environment:
-      - POSTGRES_DB=queryme
-      - POSTGRES_USER=queryme
-      - POSTGRES_PASSWORD=queryme
+    restart: always
+    image: postgres:9.6
     volumes:
-      - qm_db:/var/lib/postgresql/data
+      - data:/var/lib/postgresql
+      - ./db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
     ports:
       - "5432:5432"
+    env_file: env.dev
 
 volumes:
-  qm_db:
-    driver: "local"
+  data:
