@@ -12,6 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @package App\Models
  * @property int id
  * @property string username
+ * @property string nickname
  * @property string banner
  * @property string avatar
  * @property int vk_id

@@ -9,7 +9,9 @@ docker-compose -f docker-compose.dev.yml up -d
 docker-compose -f docker-compose.dev.yml exec -u docker qm_workspace bash
 composer install
 cp .env.example .env
-php artisan key:generate
 npm i
+php artisan key:generate
 php artisan migrate
+php artisan db:seed
+php artisan passport:install
 ```

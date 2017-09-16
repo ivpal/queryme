@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
 use App\Http\Controllers\Controller;
@@ -32,16 +31,6 @@ class SocialController extends Controller
     public function handleProviderCallback(UserService $service, $provider)
     {
         $user = $service->getOrCreate($provider);
-        Auth::login($user);
-        return redirect('/');
-    }
-
-    /**
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function logout()
-    {
-        Auth::logout();
-        return redirect('/');
+        return redirect('/')->with('token', $user->createToken($user->nickname, ['use']));
     }
 }
