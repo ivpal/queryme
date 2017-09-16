@@ -21,6 +21,11 @@
                         <span class="fb_icon"></span>
                         <a class="login_right_side" href="/auth/facebook">Вход с помощью Facebook</a>
                     </div>
+
+                    <div class="login_button vk_large_login">
+                        <span class="vk_icon"></span>
+                        <a class="login_right_side" href="/auth/vkontakte">Вход с помощью Vkontakte</a>
+                    </div>
                 </div>
             </div>
         </modal>
