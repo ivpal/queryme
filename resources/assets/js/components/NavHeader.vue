@@ -10,6 +10,7 @@
                 </ul>
                 <div class="my-2 my-md-0">
                     <span class="login" v-if="canShowLogin()" v-on:click="showLoginWindow">Вход</span>
+                    <a href="#" class="logout" v-if="!canShowLogin()" v-on:click="logout">Выход</a>
                 </div>
             </div>
         </div>
@@ -24,6 +25,14 @@
         },
         showLoginWindow() {
           this.$modal.show('login');
+        },
+        logout(e) {
+          e.preventDefault();
+          axios.post('/auth/logout', {
+            headers: { 'X-CSRF-TOKEN': window.Queryme.csrfToken }
+          }).then(function (response) {
+              window.location.replace('/');
+          })
         }
       }
     }
@@ -39,6 +48,15 @@
             &:hover {
                 color: $brand-primary;
             }
+        }
+    }
+
+    .logout {
+        color: $brand-primary;
+        line-height: 3.9rem;
+
+        &:hover {
+            color: $brand-primary-hover;
         }
     }
 

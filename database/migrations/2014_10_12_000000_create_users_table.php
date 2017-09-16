@@ -20,8 +20,9 @@ class CreateUsersTable extends Migration
             $table->integer('odnoklassniki_id')->nullable();
             $table->string('username');
             $table->string('nickname')->unique();
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->string('avatar')->nullable();
+            $table->string('banner')->nullable();
             $table->timestamps();
         });
     }

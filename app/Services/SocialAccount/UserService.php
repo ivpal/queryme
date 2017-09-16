@@ -27,7 +27,8 @@ class UserService
         if ($user) {
             return $user;
         } else {
-            $username = $providerUser->getNickname() ?: $providerUser->getId();
+            $username = $providerUser->getName() ?? $providerUser->getId();
+            $nickname = $providerUser->getNickname() ?? $providerUser->getId();
 
             $fetcher = FetcherFactory::create($provider, $providerUser);
             $banner = $fetcher->loadBanner();
@@ -37,6 +38,7 @@ class UserService
                 'avatar'         => $avatar,
                 'banner'         => $banner,
                 'username'       => $username,
+                'nickname'       => $nickname,
                 "{$provider}_id" => $providerUser->getId(),
             ]);
         }

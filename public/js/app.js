@@ -10811,6 +10811,7 @@ __webpack_require__(33);
 
 Vue.component('nav-header', __webpack_require__(42));
 Vue.component('login-modal', __webpack_require__(41));
+Vue.component('logout', __webpack_require__(55));
 
 Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_js_modal___default.a);
 
@@ -11689,6 +11690,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
@@ -11697,6 +11699,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     showLoginWindow: function showLoginWindow() {
       this.$modal.show('login');
+    },
+    logout: function logout(e) {
+      e.preventDefault();
+      axios.post('/auth/logout', { headers: { 'X-CSRF-TOKEN': window.Queryme.csrfToken } }).then(function (response) {
+        window.location.replace('/');
+      });
     }
   }
 });
@@ -14148,7 +14156,7 @@ if (typeof jQuery === 'undefined') {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(7)();
-exports.push([module.i, "\n.header .nav-link {\n  color: #71777c;\n  line-height: 3rem;\n}\n.header .nav-link:hover {\n    color: #007fff;\n}\n.brand-link:hover {\n  color: #007fff;\n}\n.login {\n  color: #007fff;\n  cursor: pointer;\n  line-height: 4rem;\n  vertical-align: middle;\n}\n.login:hover {\n    color: #0048ff;\n}\n", ""]);
+exports.push([module.i, "\n.header .nav-link {\n  color: #71777c;\n  line-height: 3rem;\n}\n.header .nav-link:hover {\n    color: #007fff;\n}\n.logout {\n  color: #007fff;\n  line-height: 3.9rem;\n}\n.logout:hover {\n    color: #0048ff;\n}\n.brand-link:hover {\n  color: #007fff;\n}\n.login {\n  color: #007fff;\n  cursor: pointer;\n  line-height: 4rem;\n  vertical-align: middle;\n}\n.login:hover {\n    color: #0048ff;\n}\n", ""]);
 
 /***/ }),
 /* 36 */
@@ -42994,7 +43002,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.showLoginWindow
     }
-  }, [_vm._v("Вход")]) : _vm._e()])])])])
+  }, [_vm._v("Вход")]) : _vm._e(), _vm._v(" "), (!_vm.canShowLogin()) ? _c('a', {
+    staticClass: "logout",
+    attrs: {
+      "href": "#"
+    },
+    on: {
+      "click": _vm.logout
+    }
+  }, [_vm._v("Выход")]) : _vm._e()])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('ul', {
     staticClass: "navbar-nav mr-auto"
@@ -43177,6 +43193,31 @@ module.exports = function(module) {
 
 __webpack_require__(12);
 module.exports = __webpack_require__(13);
+
+
+/***/ }),
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(8)(
+  /* script */
+  null,
+  /* template */
+  null,
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/var/www/resources/assets/js/components/Logout.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+
+module.exports = Component.exports
 
 
 /***/ })

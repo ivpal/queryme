@@ -2,8 +2,9 @@
 
 namespace App\Services\SocialAccount\Info;
 
-use App\Clients\Facebook;
 use Laravel\Socialite\Contracts\User;
+
+use App\Clients\Facebook;
 
 /**
  * Class FacebookFetcher
