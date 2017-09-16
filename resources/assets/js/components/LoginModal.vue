@@ -1,5 +1,5 @@
 <template>
-    <modal name="login">
+    <modal name="login" :width="320" :height="162">
         <div class="login_buttons_wrapper">
             <div class="login_buttons">
                 <div class="login_button fb_large_login">
@@ -17,6 +17,11 @@
 </template>
 
 <style lang="scss">
+    .v--modal {
+        left: 0 !important;
+        margin: auto;
+    }
+
     .login_buttons {
         max-width: 250px;
         margin: 0 auto;
