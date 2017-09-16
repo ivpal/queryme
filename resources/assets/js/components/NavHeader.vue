@@ -28,3 +28,34 @@
       }
     }
 </script>
+
+<style lang="scss">
+    @import "../../sass/variables";
+    .header {
+        .nav-link {
+            color: $nav-item-color;
+            line-height: 3rem;
+
+            &:hover {
+                color: $brand-primary;
+            }
+        }
+    }
+
+    .brand-link {
+        &:hover {
+            color: $brand-primary;
+        }
+    }
+
+    .login {
+        color: $brand-primary;
+        cursor: pointer;
+        line-height: 4rem;
+        vertical-align: middle;
+
+        &:hover {
+            color: $brand-primary-hover;
+        }
+    }
+</style>
