@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Response;
@@ -31,6 +33,6 @@ class SocialController extends Controller
     public function handleProviderCallback(UserService $service, $provider)
     {
         $user = $service->getOrCreate($provider);
-        return redirect('/')->with('token', $user->createToken($user->nickname, ['use']));
+        return redirect('/')->with('tokenResult', $user->createToken($user->nickname, ['use']));
     }
 }

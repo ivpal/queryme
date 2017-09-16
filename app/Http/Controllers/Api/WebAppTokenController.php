@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
-use Carbon\Carbon;
-use Laravel\Passport\PersonalAccessTokenFactory;
+use App\Services\Token\TokenFactory;
 
-use App\Models\User;
 use App\Http\Controllers\Controller;
 
 /**
@@ -14,19 +12,10 @@ use App\Http\Controllers\Controller;
  */
 class WebAppTokenController extends Controller
 {
-    public function create(PersonalAccessTokenFactory $factory)
+    public function create()
     {
-        $webApp = User::where('nickname', 'webapp')->first();
-        $result = $factory->make($webApp->id, 'webapp-token');
-
-        /** @var Carbon $expiresAt */
-        $expiresAt = $result->token->expires_at;
-        $expiresIn = $expiresAt->timestamp - (new \DateTime())->getTimestamp();
-
-        return [
-            'token_type'   => 'Bearer',
-            'expires_in'   => $expiresIn,
-            'access_token' => $result->accessToken,
-        ];
+        /** @var TokenFactory $factory */
+        $factory = app()->make(TokenFactory::class);
+        return $factory->createForUserAttribute('nickname', 'webapp')->asArray();
     }
 }

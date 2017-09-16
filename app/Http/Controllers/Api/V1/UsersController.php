@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use Illuminate\Http\Request;
+
 use App\Http\Controllers\Controller;
 
 /**
@@ -10,7 +12,7 @@ use App\Http\Controllers\Controller;
  */
 class UsersController extends Controller
 {
-    public function show(string $nickname)
+    public function show(Request $request, string $nickname)
     {
         return $nickname;
     }
