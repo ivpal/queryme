@@ -18,26 +18,26 @@
 </template>
 
 <script>
-    import Auth from '../services/Auth';
+  import Auth from '../services/Auth';
 
-    export default {
-      methods: {
-        canShowLogin() {
-            return Auth.isAuth();
-        },
-        showLoginWindow() {
-          this.$modal.show('login');
-        },
-        logout(e) {
-          e.preventDefault();
-          axios.post('/auth/logout', {
-            headers: {}
-          }).then(function (response) {
-              window.location.replace('/');
-          })
-        }
+  export default {
+    methods: {
+      canShowLogin() {
+          return Auth.isAuth();
+      },
+      showLoginWindow() {
+        this.$modal.show('login');
+      },
+      logout(e) {
+        e.preventDefault();
+        axios.post('/auth/logout', {
+          headers: {}
+        }).then(function (response) {
+            window.location.replace('/');
+        })
       }
     }
+  }
 </script>
 
 <style lang="scss">
