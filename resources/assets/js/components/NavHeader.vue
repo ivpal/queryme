@@ -18,10 +18,12 @@
 </template>
 
 <script>
+    import Auth from '../services/Auth';
+
     export default {
       methods: {
         canShowLogin() {
-            return true;
+            return Auth.isAuth();
         },
         showLoginWindow() {
           this.$modal.show('login');

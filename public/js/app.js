@@ -11671,6 +11671,7 @@ module.exports = function spread(callback) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_Auth__ = __webpack_require__(35);
 //
 //
 //
@@ -11691,10 +11692,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
     canShowLogin: function canShowLogin() {
-      return true;
+      return __WEBPACK_IMPORTED_MODULE_0__services_Auth__["a" /* default */].isAuth();
     },
     showLoginWindow: function showLoginWindow() {
       this.$modal.show('login');
@@ -11721,32 +11724,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 window._ = __webpack_require__(38);
 
-/**
- * We'll load the axios HTTP library which allows us to easily issue requests
- * to our Laravel back-end. This library automatically handles sending the
- * CSRF token as a header based on the value of the "XSRF" token cookie.
- */
-
 window.Vue = __webpack_require__(10);
 window.axios = __webpack_require__(14);
 
-// window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-
-/**
- * Next we will register the CSRF Token as a common header with Axios so that
- * all outgoing HTTP requests automatically have it attached. This is just
- * a simple convenience so we don't have to attach every token manually.
- */
-
-// let token = document.head.querySelector('meta[name="csrf-token"]');
-
-// if (token) {
-//     window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
-// } else {
-//     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
-// }
-
-__WEBPACK_IMPORTED_MODULE_0__services_Auth__["a" /* default */].getWebAppToken();
+__WEBPACK_IMPORTED_MODULE_0__services_Auth__["a" /* default */].setup();
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -11805,58 +11786,93 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var AUTH_KEY = 'qmAuthentication';
 
 var Auth = function () {
-    function Auth() {
-        _classCallCheck(this, Auth);
+  function Auth() {
+    _classCallCheck(this, Auth);
+  }
+
+  _createClass(Auth, null, [{
+    key: 'getWebAppToken',
+    value: function getWebAppToken() {
+      var _this = this;
+
+      axios.get('api/webapp-token').then(function (response) {
+        var data = response.data;
+        var accessToken = data.access_token,
+            expiresAt = data.expires_at;
+
+        var obj = {
+          accessToken: accessToken,
+          expiresAt: expiresAt,
+          isLoggedIn: false
+        };
+        localStorage.setItem(AUTH_KEY, JSON.stringify(obj));
+        _this.setupAxios();
+      });
     }
+  }, {
+    key: 'isAuth',
+    value: function isAuth() {
+      var qmAuth = JSON.parse(localStorage.getItem(AUTH_KEY));
+      return qmAuth && qmAuth.isLoggedIn && new Date(qmAuth.expiresAt) > __WEBPACK_IMPORTED_MODULE_0__helpers_DateHelper__["a" /* default */].nowInUTC();
+    }
+  }, {
+    key: 'login',
+    value: function login(_ref) {
+      var accessToken = _ref.access_token,
+          expiresAt = _ref.expires_at;
 
-    _createClass(Auth, null, [{
-        key: 'getWebAppToken',
-        value: function getWebAppToken() {
-            if (!Queryme.token.accessToken || new Date(Queryme.token.expiresAt) > __WEBPACK_IMPORTED_MODULE_0__helpers_DateHelper__["a" /* default */].nowInUTC()) {
-                axios.get('api/webapp-token').then(function (response) {
-                    var data = response.data;
-                    var accessToken = data.access_token,
-                        expiresAt = data.expires_at;
+      // TODO: check expires_at date
 
-                    var obj = {
-                        accessToken: accessToken,
-                        expiresAt: expiresAt,
-                        isLoggedIn: false
-                    };
-                    localStorage.setItem(AUTH_KEY, JSON.stringify(obj));
-                });
-            }
-        }
-    }, {
-        key: 'isAuth',
-        value: function isAuth() {
-            var qmAuth = JSON.parse(localStorage.getItem(AUTH_KEY));
-            return qmAuth && qmAuth.isLoggedIn && new Date(qmAuth.expiresAt) > __WEBPACK_IMPORTED_MODULE_0__helpers_DateHelper__["a" /* default */].nowInUTC();
-        }
-    }, {
-        key: 'login',
-        value: function login(_ref) {
-            var accessToken = _ref.access_token,
-                expiresAt = _ref.expires_at;
+      var qmAuth = {
+        accessToken: accessToken,
+        expiresAt: expiresAt,
+        isLoggedIn: true
+      };
 
-            // TODO: check expires_at date
+      localStorage.setItem(AUTH_KEY, JSON.stringify(qmAuth));
+      this.setupAxios();
+    }
+  }, {
+    key: 'logout',
+    value: function logout() {
+      localStorage.removeItem(AUTH_KEY);
+    }
+  }, {
+    key: 'setupAxios',
+    value: function setupAxios() {
+      var token = this.accessToken();
+      if (token) {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+      }
+    }
+  }, {
+    key: 'setup',
+    value: function setup() {
+      if (Queryme.token.accessToken) {
+        this.login(Queryme.token);
+      } else if (!this.accessToken() || this.isExpire()) {
+        this.getWebAppToken();
+      }
+    }
+  }, {
+    key: 'accessToken',
+    value: function accessToken() {
+      var tokenObj = JSON.parse(localStorage.getItem(AUTH_KEY));
+      if (tokenObj) {
+        return tokenObj.accessToken;
+      }
 
-            var qmAuth = {
-                accessToken: accessToken,
-                expiresAt: expiresAt,
-                isLoggedIn: true
-            };
+      return null;
+    }
+  }, {
+    key: 'isExpire',
+    value: function isExpire() {
+      var expiresAt = JSON.parse(localStorage.getItem(AUTH_KEY)).expiresAt;
+      return !expiresAt || new Date(expiresAt) < __WEBPACK_IMPORTED_MODULE_0__helpers_DateHelper__["a" /* default */].nowInUTC();
+    }
+  }]);
 
-            localStorage.setItem(AUTH_KEY, JSON.stringify(qmAuth));
-        }
-    }, {
-        key: 'logout',
-        value: function logout() {
-            localStorage.removeItem(AUTH_KEY);
-        }
-    }]);
-
-    return Auth;
+  return Auth;
 }();
 
 /* harmony default export */ __webpack_exports__["a"] = (Auth);
