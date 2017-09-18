@@ -48,7 +48,7 @@ export default class Auth {
   }
 
   static setup() {
-    if (Queryme.token.accessToken) {
+    if (Queryme.token.access_token) {
       this.login(Queryme.token);
     } else if (!this.accessToken() || this.isExpire()) {
       this.getWebAppToken();
