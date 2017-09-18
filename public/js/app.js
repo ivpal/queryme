@@ -814,7 +814,7 @@ var Auth = function () {
   }, {
     key: 'setup',
     value: function setup() {
-      if (Queryme.token.accessToken) {
+      if (Queryme.token.access_token) {
         this.login(Queryme.token);
       } else if (!this.accessToken() || this.isExpire()) {
         this.getWebAppToken();
@@ -11809,12 +11809,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.$modal.show('login');
     },
     logout: function logout(e) {
-      e.preventDefault();
-      axios.post('/auth/logout', {
-        headers: {}
-      }).then(function (response) {
-        window.location.replace('/');
-      });
+      __WEBPACK_IMPORTED_MODULE_0__services_Auth__["a" /* default */].logout();
+      window.location.replace('/');
     }
   }
 });

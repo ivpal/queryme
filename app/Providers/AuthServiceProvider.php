@@ -26,5 +26,8 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Passport::routes();
+        Passport::tokensCan([
+            'use' => 'Use logged features'
+        ]);
     }
 }

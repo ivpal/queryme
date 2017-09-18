@@ -26,9 +26,7 @@ class HomeController extends Controller
         $token = $request->session()->get('token');
         $params = [];
         if ($token) {
-            $params = [
-                'token' => $token,
-            ];
+            $params = $token->asArray();
         }
 
         View::share('token', $params);
