@@ -17,10 +17,7 @@
         <login-modal></login-modal>
     </div>
     <script>
-        window.Queryme = {!! json_encode(['csrfToken' => csrf_token()]) !!}
-        @if(Auth::check())
-            window.Queryme.Auth = {!! json_encode(Auth::user()) !!}
-        @endif
+        window.Queryme.token = @json($token)
     </script>
     <script src="{{ asset('js/app.js') }}"></script>
 </body>

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Services\Token\TokenFactory;
-
 use App\Http\Controllers\Controller;
 
 /**

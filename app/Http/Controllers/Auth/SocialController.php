@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Response;
 use Laravel\Socialite\Facades\Socialite;
 
+use App\Services\Token\TokenFactory;
 use App\Http\Controllers\Controller;
 use App\Services\SocialAccount\UserService;
 
@@ -27,12 +28,14 @@ class SocialController extends Controller
 
     /**
      * @param UserService $service
+     * @param TokenFactory $factory
      * @param $provider
      * @return Response
      */
-    public function handleProviderCallback(UserService $service, $provider)
+    public function handleProviderCallback(UserService $service, TokenFactory $factory,  $provider)
     {
         $user = $service->getOrCreate($provider);
-        return redirect('/')->with('tokenResult', $user->createToken($user->nickname, ['use']));
+        $token = $factory->createForUserAttribute('nickname', $user->nickname, ['use']);
+        return redirect('/')->with('token', $token);
     }
 }

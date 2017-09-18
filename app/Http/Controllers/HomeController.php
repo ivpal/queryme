@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Laravel\Passport\PersonalAccessTokenResult;
+use Illuminate\Support\Facades\View;
+
+use App\Services\Token\Token;
 
 /**
  * Class HomeController
@@ -16,16 +18,22 @@ class HomeController extends Controller
      *
      * @param Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return mixed
      */
     public function index(Request $request)
     {
-        /** @var PersonalAccessTokenResult $tokenResult */
-        $tokenResult = $request->session()->get('tokenResult');
+        /** @var Token $token */
+        $token = $request->session()->get('token');
+        $params = [];
+        if ($token) {
+            $params = [
+                'token' => $token,
+            ];
+        }
 
-        return view('home', [
-            'token' => $token
-        ]);
+        View::share('token', $params);
+
+        return view('home');
     }
 
     /**
