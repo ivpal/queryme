@@ -21,7 +21,7 @@
     export default {
       methods: {
         canShowLogin() {
-          return Queryme.Auth == undefined;
+            return true;
         },
         showLoginWindow() {
           this.$modal.show('login');
@@ -29,7 +29,7 @@
         logout(e) {
           e.preventDefault();
           axios.post('/auth/logout', {
-            headers: { 'X-CSRF-TOKEN': window.Queryme.csrfToken }
+            headers: {}
           }).then(function (response) {
               window.location.replace('/');
           })

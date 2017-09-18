@@ -2,6 +2,8 @@
 
 namespace App\Services\Token;
 
+use Carbon\Carbon;
+
 /**
  * Class JsonView
  * @package App\Services\Token
@@ -11,8 +13,8 @@ class Token
     /** @var string */
     private $tokenType;
 
-    /** @var int */
-    private $expiresIn;
+    /** @var Carbon */
+    private $expiresAt;
 
     /** @var string */
     private $accessToken;
@@ -20,13 +22,13 @@ class Token
     /**
      * JsonView constructor.
      * @param string $tokenType
-     * @param int $expiresIn
+     * @param Carbon $expiresAt
      * @param string $accessToken
      */
-    public function __construct($tokenType, $expiresIn, $accessToken)
+    public function __construct($tokenType, $expiresAt, $accessToken)
     {
         $this->tokenType = $tokenType;
-        $this->expiresIn = $expiresIn;
+        $this->expiresAt = $expiresAt;
         $this->accessToken = $accessToken;
     }
 
@@ -47,19 +49,19 @@ class Token
     }
 
     /**
-     * @return int
+     * @return Carbon
      */
-    public function getExpiresIn(): int
+    public function getExpiresAt(): Carbon
     {
-        return $this->expiresIn;
+        return $this->expiresAt;
     }
 
     /**
-     * @param int $expiresIn
+     * @param Carbon $expiresAt
      */
-    public function setExpiresIn(int $expiresIn)
+    public function setExpiresAt(Carbon $expiresAt)
     {
-        $this->expiresIn = $expiresIn;
+        $this->expiresAt = $expiresAt;
     }
 
     /**
@@ -85,7 +87,7 @@ class Token
     {
         return [
             'token_type'   => $this->tokenType,
-            'expires_in'   => $this->expiresIn,
+            'expires_at'   => $this->expiresAt->toDateTimeString(),
             'access_token' => $this->accessToken,
         ];
     }

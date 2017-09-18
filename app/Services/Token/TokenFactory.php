@@ -27,8 +27,7 @@ class TokenFactory
 
         /** @var Carbon $expiresAt */
         $expiresAt = $result->token->expires_at;
-        $expiresIn = $expiresAt->timestamp - (new \DateTime())->getTimestamp();
 
-        return new Token('Bearer', $expiresIn, $result->accessToken);
+        return new Token('Bearer', $expiresAt, $result->accessToken);
     }
 }
