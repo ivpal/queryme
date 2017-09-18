@@ -48,11 +48,11 @@ services:
     restart: always
     image: postgres:9.6
     volumes:
-      - data:/var/lib/postgresql
+      - qm_data:/var/lib/postgresql
       - ./db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
     ports:
       - "5432:5432"
     env_file: env.dev
 
 volumes:
-  data:
+  qm_data:
