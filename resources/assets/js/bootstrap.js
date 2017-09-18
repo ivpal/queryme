@@ -1,3 +1,5 @@
+import Auth from './services/Auth';
+
 window._ = require('lodash');
 
 /**
@@ -24,6 +26,8 @@ window.axios = require('axios');
 // } else {
 //     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 // }
+
+Auth.getWebAppToken();
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
