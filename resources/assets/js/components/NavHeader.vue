@@ -18,7 +18,7 @@
 </template>
 
 <script>
-  import Auth from '../services/Auth';
+  import * as Auth from '../services/Auth';
 
   export default {
     methods: {

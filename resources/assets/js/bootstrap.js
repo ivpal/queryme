@@ -1,11 +1,11 @@
-import Auth from './services/Auth';
+import { setup as authSetup } from "./services/Auth";
 
 window._ = require('lodash');
 
 window.Vue = require('vue');
 window.axios = require('axios');
 
-Auth.setup();
+authSetup();
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

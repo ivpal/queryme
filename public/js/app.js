@@ -800,106 +800,85 @@ module.exports = function bind(fn, thisArg) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_DateHelper__ = __webpack_require__(36);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return setup; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return logout; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return isAuth; });
+var _this = this;
 
 
 
 var AUTH_KEY = 'qmAuthentication';
 
-var Auth = function () {
-  function Auth() {
-    _classCallCheck(this, Auth);
+var getWebAppToken = function getWebAppToken() {
+  axios.get('api/webapp-token').then(function (response) {
+    var data = response.data;
+    var accessToken = data.access_token,
+        expiresAt = data.expires_at;
+
+    var obj = {
+      accessToken: accessToken,
+      expiresAt: expiresAt,
+      isLoggedIn: false
+    };
+    localStorage.setItem(AUTH_KEY, JSON.stringify(obj));
+    setupAxios();
+  });
+};
+
+var login = function login(_ref) {
+  var accessToken = _ref.access_token,
+      expiresAt = _ref.expires_at;
+
+  // TODO: check expires_at date
+
+  var qmAuth = {
+    accessToken: accessToken,
+    expiresAt: expiresAt,
+    isLoggedIn: true
+  };
+
+  localStorage.setItem(AUTH_KEY, JSON.stringify(qmAuth));
+  setupAxios();
+};
+
+var setupAxios = function setupAxios() {
+  var token = _this.accessToken();
+  if (token) {
+    axios.defaults.headers.common['Accept'] = 'application/json';
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+  }
+};
+
+var accessToken = function accessToken() {
+  var tokenObj = JSON.parse(localStorage.getItem(AUTH_KEY));
+  if (tokenObj) {
+    return tokenObj.accessToken;
   }
 
-  _createClass(Auth, null, [{
-    key: 'getWebAppToken',
-    value: function getWebAppToken() {
-      var _this = this;
+  return null;
+};
 
-      axios.get('api/webapp-token').then(function (response) {
-        var data = response.data;
-        var accessToken = data.access_token,
-            expiresAt = data.expires_at;
+var isExpire = function isExpire() {
+  var expiresAt = JSON.parse(localStorage.getItem(AUTH_KEY)).expiresAt;
+  return !expiresAt || new Date(expiresAt) < __WEBPACK_IMPORTED_MODULE_0__helpers_DateHelper__["a" /* nowInUTC */]();
+};
 
-        var obj = {
-          accessToken: accessToken,
-          expiresAt: expiresAt,
-          isLoggedIn: false
-        };
-        localStorage.setItem(AUTH_KEY, JSON.stringify(obj));
-        _this.setupAxios();
-      });
-    }
-  }, {
-    key: 'isAuth',
-    value: function isAuth() {
-      var qmAuth = JSON.parse(localStorage.getItem(AUTH_KEY));
-      return qmAuth && qmAuth.isLoggedIn && new Date(qmAuth.expiresAt) > __WEBPACK_IMPORTED_MODULE_0__helpers_DateHelper__["a" /* default */].nowInUTC();
-    }
-  }, {
-    key: 'login',
-    value: function login(_ref) {
-      var accessToken = _ref.access_token,
-          expiresAt = _ref.expires_at;
+var setup = function setup() {
+  if (Queryme.token.access_token) {
+    login(Queryme.token);
+  } else if (!accessToken() || isExpire()) {
+    getWebAppToken();
+  }
+};
 
-      // TODO: check expires_at date
+var logout = function logout() {
+  localStorage.removeItem(AUTH_KEY);
+};
 
-      var qmAuth = {
-        accessToken: accessToken,
-        expiresAt: expiresAt,
-        isLoggedIn: true
-      };
-
-      localStorage.setItem(AUTH_KEY, JSON.stringify(qmAuth));
-      this.setupAxios();
-    }
-  }, {
-    key: 'logout',
-    value: function logout() {
-      localStorage.removeItem(AUTH_KEY);
-    }
-  }, {
-    key: 'setupAxios',
-    value: function setupAxios() {
-      var token = this.accessToken();
-      if (token) {
-        axios.defaults.headers.common['Accept'] = 'application/json';
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-      }
-    }
-  }, {
-    key: 'setup',
-    value: function setup() {
-      if (Queryme.token.access_token) {
-        this.login(Queryme.token);
-      } else if (!this.accessToken() || this.isExpire()) {
-        this.getWebAppToken();
-      }
-    }
-  }, {
-    key: 'accessToken',
-    value: function accessToken() {
-      var tokenObj = JSON.parse(localStorage.getItem(AUTH_KEY));
-      if (tokenObj) {
-        return tokenObj.accessToken;
-      }
-
-      return null;
-    }
-  }, {
-    key: 'isExpire',
-    value: function isExpire() {
-      var expiresAt = JSON.parse(localStorage.getItem(AUTH_KEY)).expiresAt;
-      return !expiresAt || new Date(expiresAt) < __WEBPACK_IMPORTED_MODULE_0__helpers_DateHelper__["a" /* default */].nowInUTC();
-    }
-  }]);
-
-  return Auth;
-}();
-
-/* harmony default export */ __webpack_exports__["a"] = (Auth);
+var isAuth = function isAuth() {
+  var qmAuth = JSON.parse(localStorage.getItem(AUTH_KEY));
+  return qmAuth && qmAuth.isLoggedIn && new Date(qmAuth.expiresAt) > __WEBPACK_IMPORTED_MODULE_0__helpers_DateHelper__["a" /* nowInUTC */]();
+};
 
 /***/ }),
 /* 9 */
@@ -11819,13 +11798,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
     canShowLogin: function canShowLogin() {
-      return !__WEBPACK_IMPORTED_MODULE_0__services_Auth__["a" /* default */].isAuth();
+      return !__WEBPACK_IMPORTED_MODULE_0__services_Auth__["a" /* isAuth */]();
     },
     showLoginWindow: function showLoginWindow() {
       this.$modal.show('login');
     },
     logout: function logout(e) {
-      __WEBPACK_IMPORTED_MODULE_0__services_Auth__["a" /* default */].logout();
+      __WEBPACK_IMPORTED_MODULE_0__services_Auth__["b" /* logout */]();
       window.location.replace('/');
     }
   }
@@ -11858,7 +11837,7 @@ window._ = __webpack_require__(39);
 window.Vue = __webpack_require__(11);
 window.axios = __webpack_require__(15);
 
-__WEBPACK_IMPORTED_MODULE_0__services_Auth__["a" /* default */].setup();
+__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__services_Auth__["c" /* setup */])();
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -11880,27 +11859,11 @@ __WEBPACK_IMPORTED_MODULE_0__services_Auth__["a" /* default */].setup();
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var DateHelper = function () {
-    function DateHelper() {
-        _classCallCheck(this, DateHelper);
-    }
-
-    _createClass(DateHelper, null, [{
-        key: "nowInUTC",
-        value: function nowInUTC() {
-            var now = new Date();
-            return new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
-        }
-    }]);
-
-    return DateHelper;
-}();
-
-/* harmony default export */ __webpack_exports__["a"] = (DateHelper);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return nowInUTC; });
+var nowInUTC = function nowInUTC() {
+  var now = new Date();
+  return new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
+};
 
 /***/ }),
 /* 37 */

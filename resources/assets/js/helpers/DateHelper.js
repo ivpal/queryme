@@ -1,13 +1,11 @@
-export default class DateHelper {
-    static nowInUTC() {
-        const now = new Date();
-        return new Date(
-            now.getUTCFullYear(),
-            now.getUTCMonth(),
-            now.getUTCDate(),
-            now.getUTCHours(),
-            now.getUTCMinutes(),
-            now.getUTCSeconds()
-        );
-    }
-}
+export const nowInUTC = () => {
+  const now = new Date();
+  return new Date(
+    now.getUTCFullYear(),
+    now.getUTCMonth(),
+    now.getUTCDate(),
+    now.getUTCHours(),
+    now.getUTCMinutes(),
+    now.getUTCSeconds()
+  );
+};
