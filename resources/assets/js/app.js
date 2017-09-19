@@ -3,12 +3,12 @@ require('./bootstrap');
 import vmodal from 'vue-js-modal';
 import VueRouter from 'vue-router'
 
+import App from './components/App.vue'
+
 // TODO: сделать ленивую загрузку компонентов
 
 import User from './components/user/User.vue'
 
-Vue.component('nav-header', require('./components/NavHeader.vue'));
-Vue.component('login-modal', require('./components/LoginModal.vue'));
 Vue.component('user', User);
 
 Vue.use(VueRouter);
@@ -20,7 +20,8 @@ const router = new VueRouter({
   ]
 });
 
-const app = new Vue({
+new Vue({
   el: '#app',
+  render: h => h(App),
   router
 });
