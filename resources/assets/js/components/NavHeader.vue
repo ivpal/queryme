@@ -9,8 +9,8 @@
           </li>
         </ul>
         <div class="my-2 my-md-0">
-          <span class="login" v-if="canShowLogin()" v-on:click="showLoginWindow">Вход</span>
-          <a href="#" class="logout" v-if="!canShowLogin()" v-on:click="logout">Выход</a>
+          <span class="login" v-if="canShowLogin()" @click="showLoginWindow">Вход</span>
+          <a href="#" class="logout" v-if="!canShowLogin()" @click.prevent="logout">Выход</a>
         </div>
       </div>
     </div>

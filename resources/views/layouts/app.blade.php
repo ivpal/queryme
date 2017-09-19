@@ -15,6 +15,7 @@
         @yield('content')
 
         <login-modal></login-modal>
+        <router-view></router-view>
     </div>
     <script>
         window.Queryme = {};
