@@ -44,9 +44,9 @@ abstract class Fetcher
      */
     private function loadImage(string $type, string $url): string
     {
-        $fileName = Uuid::generate(4);
+        $fileName = Uuid::generate(4) . '.jpg';
         $content = file_get_contents($url); // TODO: check content
-        Storage::disk('public')->put("{$type}s/" . $fileName . '.jpg', $content);
+        Storage::disk('public')->put("{$type}s/" . $fileName, $content);
         return $fileName;
     }
 }

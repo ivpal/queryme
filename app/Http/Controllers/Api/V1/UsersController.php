@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use Illuminate\Http\Request;
 
+use App\Models\User;
 use App\Http\Controllers\Controller;
 
 /**
@@ -14,6 +15,11 @@ class UsersController extends Controller
 {
     public function show(Request $request, string $nickname)
     {
-        return $nickname;
+        /** @var User $user */
+        $user = User::where('nickname', $nickname)->firstOrFail();
+        return [
+            'avatar' => $user->getAvatarUrl(),
+            'banner' => $user->getBannerUrl(),
+        ];
     }
 }

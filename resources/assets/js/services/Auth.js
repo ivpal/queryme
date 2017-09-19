@@ -43,6 +43,7 @@ export default class Auth {
   static setupAxios() {
     const token = this.accessToken();
     if (token) {
+      axios.defaults.headers.common['Accept'] = 'application/json';
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     }
   }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Carbon\Carbon;
@@ -52,13 +54,19 @@ class User extends Authenticatable
         return $this->hasMany(Reply::class);
     }
 
-    public function setAttribute($key, $value)
+    /**
+     * @return null|string
+     */
+    public function getAvatarUrl(): ?string
     {
-        $isRememberTokenAttribute = $key == $this->getRememberTokenName();
-        if (!$isRememberTokenAttribute) {
-            parent::setAttribute($key, $value);
-        }
+        return $this->avatar ? env('APP_URL') . '/storage/avatars/' . $this->avatar : null;
     }
 
-
+    /**
+     * @return null|string
+     */
+    public function getBannerUrl(): ?string
+    {
+        return $this->banner ? env('APP_URL') . '/storage/banners/' . $this->banner : null;
+    }
 }

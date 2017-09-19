@@ -10,4 +10,3 @@ Route::namespace('Api')->group(function () {
             Route::get('users/{nickname}', 'UsersController@show');
         });
 });
-
