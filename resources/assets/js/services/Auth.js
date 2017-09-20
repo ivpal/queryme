@@ -1,5 +1,6 @@
 import * as DateHelper from '../helpers/DateHelper';
 
+const USER_KEY = 'qmUser';
 const AUTH_KEY = 'qmAuthentication';
 
 const getWebAppToken = () => {
@@ -31,7 +32,7 @@ const login = ({ access_token: accessToken, expires_at: expiresAt }) => {
 };
 
 const setupAxios = () => {
-  const token = this.accessToken();
+  const token = accessToken();
   if (token) {
     axios.defaults.headers.common['Accept'] = 'application/json';
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -53,8 +54,12 @@ const isExpire = () => {
 };
 
 export const setup = () => {
-  if (Queryme.token.access_token) {
+  if (Queryme.token) {
     login(Queryme.token);
+
+    if (Queryme.user) {
+      localStorage.setItem(USER_KEY, JSON.stringify(Queryme.user));
+    }
   } else if (!accessToken() || isExpire()) {
     getWebAppToken();
   }
@@ -62,6 +67,7 @@ export const setup = () => {
 
 export const logout = () => {
   localStorage.removeItem(AUTH_KEY);
+  localStorage.removeItem(USER_KEY);
 };
 
 export const isAuth = () => {

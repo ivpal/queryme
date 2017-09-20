@@ -10,7 +10,7 @@ use Laravel\Socialite\Facades\Socialite;
 use Core\Services\Token\TokenFactory;
 use Core\Http\Controllers\Controller;
 
-use App\Services\SocialAccount\AccountService;
+use ApiV1\Users\Services\SocialAccount\AccountService;
 
 /**
  * Class SocialController
@@ -38,6 +38,6 @@ class SocialController extends Controller
     {
         $user = $service->getOrCreate($provider);
         $token = $factory->createForUserAttribute('nickname', $user->nickname, ['use']);
-        return redirect('/')->with('token', $token);
+        return redirect('/')->with('token', $token)->with('user', $user);
     }
 }

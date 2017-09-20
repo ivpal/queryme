@@ -11,7 +11,14 @@
     @yield('content')
     <script>
         window.Queryme = {};
-        window.Queryme.token = @json($token);
+
+        @if(isset($token))
+          window.Queryme.token = @json($token);
+        @endif
+
+        @if(isset($user))
+            window.Queryme.user = @json($user);
+        @endif
     </script>
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
