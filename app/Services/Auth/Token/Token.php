@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Token;
 
 use Carbon\Carbon;
@@ -43,7 +45,7 @@ class Token
     /**
      * @param string $tokenType
      */
-    public function setTokenType(string $tokenType)
+    public function setTokenType(string $tokenType): void
     {
         $this->tokenType = $tokenType;
     }
@@ -59,7 +61,7 @@ class Token
     /**
      * @param Carbon $expiresAt
      */
-    public function setExpiresAt(Carbon $expiresAt)
+    public function setExpiresAt(Carbon $expiresAt): void
     {
         $this->expiresAt = $expiresAt;
     }
@@ -75,7 +77,7 @@ class Token
     /**
      * @param string $accessToken
      */
-    public function setAccessToken(string $accessToken)
+    public function setAccessToken(string $accessToken):void
     {
         $this->accessToken = $accessToken;
     }
@@ -83,7 +85,7 @@ class Token
     /**
      * @return array
      */
-    public function asArray()
+    public function asArray(): array
     {
         return [
             'token_type'   => $this->tokenType,

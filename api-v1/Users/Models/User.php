@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Models;
+namespace ApiV1\Models;
 
 use Carbon\Carbon;
 use Laravel\Passport\HasApiTokens;

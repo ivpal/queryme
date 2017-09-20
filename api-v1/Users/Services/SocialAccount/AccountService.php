@@ -5,14 +5,14 @@ namespace App\Services\SocialAccount;
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Contracts\User as ProviderUser;
 
-use App\Models\User;
+use ApiV1\Models\User;
 use App\Services\SocialAccount\Info\FetcherFactory;
 
 /**
  * Class UserService
  * @package App\Services\SocialAccount
  */
-class UserService
+class AccountService
 {
     /**
      * @param string $provider
