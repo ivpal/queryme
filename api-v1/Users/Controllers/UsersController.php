@@ -6,8 +6,9 @@ namespace ApiV1\Users\Controllers;
 
 use Illuminate\Http\Request;
 
+use Core\Http\Controllers\Controller;
+
 use ApiV1\Models\User;
-use App\Http\Controllers\Controller;
 
 /**
  * Class UsersController

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-use App\Models\User;
+use ApiV1\Models\User;
 
 class UsersTableSeeder extends Seeder
 {
