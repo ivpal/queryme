@@ -10,7 +10,7 @@
         </ul>
         <div class="my-2 my-md-0">
           <span class="login" v-if="canShowLogin()" @click="showLoginWindow">Вход</span>
-          <a href="#" class="logout" v-if="!canShowLogin()" @click.prevent="logout">Выход</a>
+          <user-actions></user-actions>
         </div>
       </div>
     </div>
@@ -18,7 +18,12 @@
 </template>
 
 <script>
-import * as Auth from '../../services/Auth';
+import Vue from 'vue'
+
+import * as Auth from '../../services/Auth'
+import UserActions from './UserActions.vue'
+
+Vue.component('user-actions', UserActions);
 
 export default {
   methods: {

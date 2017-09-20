@@ -1,6 +1,6 @@
-import * as DateHelper from '../helpers/DateHelper';
+import * as DateHelper from '../helpers/DateHelper'
+import * as User from '../services/User'
 
-const USER_KEY = 'qmUser';
 const AUTH_KEY = 'qmAuthentication';
 
 const getWebAppToken = () => {
@@ -58,7 +58,7 @@ export const setup = () => {
     login(Queryme.token);
 
     if (Queryme.user) {
-      localStorage.setItem(USER_KEY, JSON.stringify(Queryme.user));
+      User.store(Queryme.user);
     }
   } else if (!accessToken() || isExpire()) {
     getWebAppToken();
@@ -67,7 +67,7 @@ export const setup = () => {
 
 export const logout = () => {
   localStorage.removeItem(AUTH_KEY);
-  localStorage.removeItem(USER_KEY);
+  User.destroy();
 };
 
 export const isAuth = () => {
