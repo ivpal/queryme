@@ -12,9 +12,8 @@
               </li>
             </div>
             <li class="nav-item auth">
-              <span class="login">
-                Вход
-              </span>
+              <span class="login" v-if="canShowLogin()" @click="showLoginWindow">Вход</span>
+              <user-actions v-else></user-actions>
             </li>
           </ul>
         </nav>
@@ -38,10 +37,6 @@ export default {
     },
     showLoginWindow() {
       this.$modal.show('login');
-    },
-    logout(e) {
-      Auth.logout();
-      window.location.replace('/');
     }
   }
 }

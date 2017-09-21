@@ -39,6 +39,7 @@ class HomeController extends Controller
             $userData = [
                 'avatar'   => $user->getAvatarUrl(),
                 'nickname' => $user->nickname,
+                'username' => $user->username,
             ];
             View::share('user', $userData);
         }

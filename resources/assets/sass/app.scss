@@ -1,5 +1,7 @@
 @import "~normalize.css/normalize.css";
+
 @import "variables";
+@import "helpers";
 
 body {
   font-family: Lato, Arial, sans-serif;
@@ -22,21 +24,3 @@ li {
   width: 100%;
   max-width: 1140px;
 }
-
-//.header {
-//  border-bottom: 1px solid $app-border-color;
-//  background-color: #fff;
-//  height: 60px;
-//}
-
-//a {
-//  &:hover {
-//    text-decoration: none;
-//    cursor: pointer;
-//  }
-//
-//  &:focus {
-//    color: white;
-//    text-decoration: none;
-//  }
-//}
