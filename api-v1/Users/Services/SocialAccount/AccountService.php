@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\SocialAccount;
+namespace ApiV1\Users\Services\SocialAccount;
 
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Contracts\User as ProviderUser;

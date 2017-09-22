@@ -1,11 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Core\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 
 use Core\Services\Token\Token;
+
+use ApiV1\Models\User;
 
 /**
  * Class HomeController
@@ -24,12 +28,21 @@ class HomeController extends Controller
     {
         /** @var Token $token */
         $token = $request->session()->get('token');
-        $params = [];
         if ($token) {
             $params = $token->asArray();
+            View::share('token', $params);
         }
 
-        View::share('token', $params);
+        /** @var User $user */
+        $user = $request->session()->get('user');
+        if ($user) {
+            $userData = [
+                'avatar'   => $user->getAvatarUrl(),
+                'nickname' => $user->nickname,
+                'username' => $user->username,
+            ];
+            View::share('user', $userData);
+        }
 
         return view('home');
     }

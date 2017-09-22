@@ -16,7 +16,7 @@ Vue.use(vmodal);
 
 const router = new VueRouter({
   routes: [
-    { path: '/:nickname', component: User }
+    { path: '/:nickname', component: User, name: 'user' }
   ]
 });
 

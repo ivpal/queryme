@@ -1,24 +1,34 @@
 <template>
-  <nav class="navbar navbar-toggleable-md header">
-    <div class="container">
-      <a class="navbar-brand brand-link" href="/">Queryme</a>
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="/discover">Discover</a>
-          </li>
-        </ul>
-        <div class="my-2 my-md-0">
-          <span class="login" v-if="canShowLogin()" @click="showLoginWindow">Вход</span>
-          <a href="#" class="logout" v-if="!canShowLogin()" @click.prevent="logout">Выход</a>
-        </div>
+  <div class="main-header-box">
+    <div class="main-header">
+      <div class="container">
+        <a href="#" class="logo">Queryme</a>
+
+        <nav class="main-nav">
+          <ul class="nav-list">
+            <div class="main-nav-list">
+              <li class="nav-item link-item">
+                <a href="#">Популярное</a>
+              </li>
+            </div>
+            <li class="nav-item">
+              <span class="login" v-if="canShowLogin()" @click="showLoginWindow">Вход</span>
+              <user-actions v-else></user-actions>
+            </li>
+          </ul>
+        </nav>
       </div>
     </div>
-  </nav>
+  </div>
 </template>
 
 <script>
-import * as Auth from '../../services/Auth';
+import Vue from 'vue'
+
+import * as Auth from '../../services/Auth'
+import UserActions from './UserActions.vue'
+
+Vue.component('user-actions', UserActions);
 
 export default {
   methods: {
@@ -27,10 +37,6 @@ export default {
     },
     showLoginWindow() {
       this.$modal.show('login');
-    },
-    logout(e) {
-      Auth.logout();
-      window.location.replace('/');
     }
   }
 }
@@ -39,40 +45,76 @@ export default {
 <style lang="scss">
 @import "../../../sass/variables";
 
-.header {
-  .nav-link {
-    color: $nav-item-color;
-    line-height: 3rem;
+.main-header-box {
+  position: relative;
+}
 
-    &:hover {
-      color: $brand-primary;
-    }
+.main-header {
+  position: fixed;
+  background: #fff;
+  color: #909090;
+  height: $header-height;
+  z-index: 250;
+  top: 0;
+  left: 0;
+  right: 0;
+  transition: all .2s;
+  border-bottom: 1px solid #f1f1f1;
+
+  .container {
+    height: 100%;
+    display: flex;
+    align-items: center;
   }
 }
 
-.logout {
+.logo {
+  font-size: 1.6rem;
+  margin-right: 2rem;
   color: $brand-primary;
-  line-height: 3.9rem;
-
-  &:hover {
-    color: $brand-primary-hover;
-  }
 }
 
-.brand-link {
-  &:hover {
-    color: $brand-primary;
-  }
+.main-nav {
+  height: 100%;
+  flex: 1 0 auto;
+}
+
+.nav-list {
+  margin: 0;
+  height: 100%;
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.main-nav-list {
+  display: flex;
+}
+  
+.nav-item {
+  margin: 0;
+  height: 100%;
+  display: flex;
+  color: $nav-item-color;
+  cursor: pointer;
+  padding: 0 1.5rem;
+  font-size: 1.2rem;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+}
+
+.link-item a:hover {
+  color: $nav-active-color;
 }
 
 .login {
-  color: $brand-primary;
-  cursor: pointer;
-  line-height: 4rem;
-  vertical-align: middle;
+  color: $nav-active-color;
 
   &:hover {
-    color: $brand-primary-hover;
+    color: $nav-auth-hover-color;
   }
 }
+
 </style>

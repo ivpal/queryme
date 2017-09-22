@@ -1,28 +1,26 @@
-@font-face {
-  font-family: Lato;
-  src: url('../fonts/Lato-Bold.ttf');
-  src: url('../fonts/Lato-Regular.ttf');
-  src: url('../fonts/Lato-Semibold.ttf');
-}
+@import "~normalize.css/normalize.css";
 
 @import "variables";
-@import "node_modules/bootstrap/scss/bootstrap";
+@import "helpers";
 
-.header {
-  border-bottom: 1px solid $app-border-color;
-  background-color: #fff;
-  height: 60px;
+body {
+  font-family: Lato, Arial, sans-serif;
+  background-color: $body-bg;
 }
 
 a {
-  &:hover {
-    text-decoration: none;
-    cursor: pointer;
-  }
-
-  &:focus {
-    color: white;
-    text-decoration: none;
-  }
+  text-decoration: none;
+  cursor: pointer;
+  color: #909090;
 }
 
+li {
+  list-style: none;
+}
+
+.container {
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1140px;
+}
