@@ -11,7 +11,7 @@
                 <a href="#">Популярное</a>
               </li>
             </div>
-            <li class="nav-item auth">
+            <li class="nav-item">
               <span class="login" v-if="canShowLogin()" @click="showLoginWindow">Вход</span>
               <user-actions v-else></user-actions>
             </li>
@@ -109,7 +109,7 @@ export default {
   color: $nav-active-color;
 }
 
-.auth {
+.login {
   color: $nav-active-color;
 
   &:hover {
