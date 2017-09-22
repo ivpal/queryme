@@ -25,7 +25,7 @@
 <script>
 import Vue from 'vue'
 
-import * as Auth from '../../services/Auth'
+import * as auth from '../../helpers/auth'
 import UserActions from './UserActions.vue'
 
 Vue.component('user-actions', UserActions);
@@ -33,7 +33,7 @@ Vue.component('user-actions', UserActions);
 export default {
   methods: {
     canShowLogin() {
-      return !Auth.isAuth();
+      return !auth.isAuth();
     },
     showLoginWindow() {
       this.$modal.show('login');

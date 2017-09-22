@@ -1,4 +1,4 @@
-import { setup as authSetup } from "./services/Auth";
+import { setup as authSetup } from "./helpers/auth";
 
 window._ = require('lodash');
 
