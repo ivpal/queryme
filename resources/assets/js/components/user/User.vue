@@ -1,6 +1,11 @@
 <template>
-  <div class="banner">
-    <img :src="banner">
+  <div>
+    <div class="banner">
+      <img :src="banner">
+    </div>
+    <div class="avatar">
+      <img class="round-image avatar-150" :src="avatar">
+    </div>
   </div>
 </template>
 
@@ -29,13 +34,25 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../../../sass/variables";
+
 .banner {
-  height: 320px;
+  height: $banner-height;
   overflow: hidden;
   text-align: center;
 
   img {
     width: 100%;
+  }
+}
+
+.avatar {
+  position: absolute;
+  top: 27%;
+  left: 25%;
+
+  img {
+    border: 2px solid #fff;
   }
 }
 </style>
