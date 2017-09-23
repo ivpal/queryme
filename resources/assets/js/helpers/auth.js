@@ -54,15 +54,17 @@ const isExpire = () => {
 };
 
 export const setup = () => {
-  if (Queryme.token) {
-    login(Queryme.token);
+  setupAxios();
 
-    if (Queryme.user) {
-      user.store(Queryme.user);
-    }
-  } else if (!accessToken() || isExpire()) {
-    getWebAppToken();
-  }
+  // if (Queryme.token) {
+  //   login(Queryme.token);
+  //
+  //   if (Queryme.user) {
+  //     user.store(Queryme.user);
+  //   }
+  // } else if (!accessToken() || isExpire()) {
+  //   getWebAppToken();
+  // }
 };
 
 export const logout = () => {
