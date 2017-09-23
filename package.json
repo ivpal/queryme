@@ -17,6 +17,7 @@
     "lodash": "^4.17.4"
   },
   "dependencies": {
+    "de-indent": "^1.0.2",
     "normalize.css": "^7.0.0",
     "vue": "^2.4.4",
     "vue-js-modal": "^1.2.11",

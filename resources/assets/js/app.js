@@ -17,7 +17,7 @@ Vue.use(VueRouter);
 Vue.use(vmodal);
 
 const router = new VueRouter({
-  mode: 'history',
+  // mode: 'history',
   routes: [
     { path: '/:nickname', component: User, name: 'user' }
   ]
