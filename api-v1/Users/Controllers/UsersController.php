@@ -24,6 +24,7 @@ class UsersController extends Controller
             'avatar' => $user->getAvatarUrl(),
             'banner' => $user->getBannerUrl(),
             'description' => $user->description,
+            'username' => $user->username,
             'can_follow' => true,
             'following_count' => 100,
             'followers_count' => 200,
