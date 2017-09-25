@@ -1,37 +1,14 @@
 <template>
-  <div>
-    <div class="banner">
-      <img :src="banner">
-    </div>
-
+  <div class="user">
     <div class="user-profile">
-      <div class="avatar">
-        <img class="round-image avatar-150" :src="avatar">
+      <div class="banner">
+        <router-link :to="{ name: 'user', params: { nickname } }" :style="bannerStyle">
+        </router-link>
       </div>
-
-      <div class="user-info">
-        <div>{{ username }}</div>
-        <div>@{{ nickname }}</div>
-        <div>{{ description }}</div>
-        <div class="user-stats">
-          <dl>
-            <a href="#">
-              <dt>{{ following_count }}</dt>
-              <dd>
-                <span>Читаемые</span>
-              </dd>
-            </a>
-          </dl>
-
-          <dl>
-            <a href="#">
-              <dt>{{ followers_count }}</dt>
-              <dd>
-                <span>Читатели</span>
-              </dd>
-            </a>
-          </dl>
-        </div>
+      <div class="avatar">
+        <router-link :to="{ name: 'user', params: { nickname } }">
+          <img class="avatar-96 round-image" :src="avatar">
+        </router-link>
       </div>
     </div>
   </div>
@@ -44,24 +21,26 @@ export default {
   data() {
     return {
       avatar: '',
-      banner: '',
       username: '',
       description: '',
       following_count: 0,
       followers_count: 0,
       nickname: this.$route.params.nickname,
+      bannerStyle: {
+        backgroundImage: ''
       }
-    },
+    }
+  },
   mounted() {
     user.getInfo(this.$route.params.nickname)
       .then(response => {
         const data = response.data;
         this.avatar = data.avatar;
-        this.banner = data.banner;
         this.username = data.username;
         this.description = data.description;
         this.following_count = data.following_count;
         this.followers_count = data.followers_count;
+        this.bannerStyle.backgroundImage = `url(${data.banner})`;
       })
       .catch(error => { console.log(error) })
   }
@@ -71,7 +50,40 @@ export default {
 <style lang="scss">
 @import "../../../sass/variables";
 
-.banner {
+.user {
+  display: flex;
+}
+
+.user-profile {
+  width: 360px;
+  flex-grow: 0;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .1);
+  border-radius: 3px;
+  position: relative;
+}
+
+.banner a {
+  position: relative;
+  display: block;
+  height: 180px;
+  width: 100%;
+  background-size: cover;
+  background: 50% #616161;
+}
+
+.avatar {
+  position: absolute;
+  display: inline;
+  bottom: -50px;
+  left: 21px;
+
+  img {
+    border: 2px solid #fff;
+  }
+}
+
+/*.banner {
   height: $banner-height;
   overflow: hidden;
   text-align: center;
@@ -104,5 +116,5 @@ export default {
   img {
     border: 2px solid #fff;
   }
-}
+}*/
 </style>
