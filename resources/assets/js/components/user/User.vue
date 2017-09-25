@@ -2,13 +2,18 @@
   <div class="user">
     <div class="user-profile">
       <div class="banner">
-        <router-link :to="{ name: 'user', params: { nickname } }" :style="bannerStyle">
-        </router-link>
-      </div>
-      <div class="avatar">
-        <router-link :to="{ name: 'user', params: { nickname } }">
+        <router-link :to="{ name: 'user', params: { nickname } }" :style="bannerStyle" class="banner-link"></router-link>
+        <router-link :to="{ name: 'user', params: { nickname } }" class="avatar-link">
           <img class="avatar-96 round-image" :src="avatar">
         </router-link>
+      </div>
+      <div class="user-data">
+        <h1>
+          <router-link :to="{ name: 'user', params: { nickname } }">{{ username }}</router-link>
+        </h1>
+        <div>
+          <router-link :to="{ name: 'user', params: { nickname } }">{{ nickname }}</router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -58,21 +63,24 @@ export default {
   width: 360px;
   flex-grow: 0;
   background: #fff;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, .1);
   border-radius: 3px;
   position: relative;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .1);
 }
 
-.banner a {
+.banner {
   position: relative;
-  display: block;
-  height: 180px;
-  width: 100%;
-  background-size: cover;
-  background: 50% #616161;
+
+  .banner-link {
+    width: 100%;
+    height: 180px;
+    display: block;
+    background-size: cover;
+    background: 50% #616161;
+  }
 }
 
-.avatar {
+.avatar-link {
   position: absolute;
   display: inline;
   bottom: -50px;
