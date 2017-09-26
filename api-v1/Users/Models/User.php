@@ -92,25 +92,36 @@ class User extends Authenticatable
     }
 
     /**
-     * @param int $id
+     * @param User $user
      *
      * @return bool
      */
-    public function canFollow(int $id): bool
+    public function canFollow(User $user): bool
     {
-        return !in_array($id, $this->followerIds());
+        return $this->tokenCan('use') && $user->id != $this->id && !in_array($user->id, $this->followerIds());
     }
 
-    public function isFollowing(int $id): bool
+    /**
+     * @param User $user
+     *
+     * @return bool
+     */
+    public function isFollowing(User $user): bool
     {
-        return in_array($id, $this->followerIds());
+        return $this->tokenCan('use') && $user->id != $this->id && in_array($user->id, $this->followerIds());
     }
 
+    /**
+     * @return array
+     */
     private function followerIds(): array
     {
         return Follower::where('follower_id', $this->id)->pluck('following_id')->all();
     }
 
+    /**
+     * @return array
+     */
     private function followingIds():array
     {
         return Follower::where('following_id', $this->id)->pluck('follower_id')->all();

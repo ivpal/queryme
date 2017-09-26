@@ -7,6 +7,8 @@ namespace ApiV1\Users\Providers;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 
+use ApiV1\Models\User;
+
 /**
  * Class UsersRoutesServiceProvider
  * @package ApiV1\Users\Providers
@@ -26,10 +28,10 @@ class UsersRoutesServiceProvider extends RouteServiceProvider
 
     public function boot()
     {
-//        $this->path = base_path() . '/api-v1/Users/routes.php';
         $this->path = base_path()
             . DIRECTORY_SEPARATOR
             . implode(DIRECTORY_SEPARATOR, ['api-v1', 'Users', 'routes.php']);
+
         parent::boot();
     }
 

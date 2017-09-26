@@ -6,7 +6,7 @@ namespace ApiV1\Users\Controllers;
 
 use Illuminate\Http\Request;
 
-use Core\Http\Controllers\Controller;
+use Core\Http\Controllers\ApiController;
 
 use ApiV1\Models\User;
 
@@ -14,13 +14,15 @@ use ApiV1\Models\User;
  * Class UsersController
  * @package ApiV1\Controllers
  */
-class UsersController extends Controller
+class UsersController extends ApiController
 {
-    public function show(Request $request, $nickname)
+    public function __construct(Request $request)
     {
-        /** @var User $user */
-        $currentUser = $request->user();
+        parent::__construct($request);
+    }
 
+    public function show(Request $request, string $nickname)
+    {
         $user = User::where('nickname', $nickname)->withCount(['followers', 'following'])->firstOrFail();
 
         return [
@@ -28,22 +30,10 @@ class UsersController extends Controller
             'banner' => $user->getBannerUrl(),
             'description' => $user->description,
             'username' => $user->username,
-            'can_follow' => $currentUser->tokenCan('use') && $currentUser->id != $user->id && $user->canFollow($currentUser->id),
-            'following' => $currentUser->tokenCan('use') && $currentUser->id != $user->id && $user->isFollowing($currentUser->id),
+            'can_follow' => $this->currentUser->canFollow($user),
+            'following' => $this->currentUser->isFollowing($user),
             'following_count' => $user->following_count,
             'followers_count' => $user->followers_count,
         ];
-    }
-
-    public function followers(Request $request, $nickname)
-    {
-        $user = User::where('nickname', $nickname)->with('followers')->firstOrFail();
-        return $user->followers;
-    }
-
-    public function following(Request $request, $nickname)
-    {
-        $user = User::where('nickname', $nickname)->with('following')->firstOrFail();
-        return $user->following;
     }
 }

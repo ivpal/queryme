@@ -14,4 +14,14 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Follower extends Model
 {
+    /** @var array */
+    protected $fillable = ['follower_id', 'following_id'];
+
+    /** @var bool */
+    public $timestamps = false;
+
+    public function setCreatedAtAttribute()
+    {
+        $this->attributes['created_at'] = Carbon::now();
+    }
 }
