@@ -23,6 +23,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property int facebook_id
  * @property User[] followers
  * @property User[] following
+ * @property int followers_count
+ * @property int following_count
  * @property Question[] questions
  * @property Reply[] replies
  * @property Carbon created_at
@@ -78,7 +80,7 @@ class User extends Authenticatable
      */
     public function followers()
     {
-        return $this->belongsToMany(User::class, 'followers', 'follower_id', 'following_id');
+        return $this->belongsToMany(User::class, 'followers', 'following_id', 'follower_id');
     }
 
     /**
@@ -86,6 +88,6 @@ class User extends Authenticatable
      */
     public function following()
     {
-        return $this->belongsToMany(User::class, 'followers', 'following_id', 'follower_id');
+        return $this->belongsToMany(User::class, 'followers', 'follower_id', 'following_id');
     }
 }

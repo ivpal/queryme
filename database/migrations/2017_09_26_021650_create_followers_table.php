@@ -18,6 +18,9 @@ class CreateFollowersTable extends Migration
             $table->integer('following_id')->unsigned();
             $table->timestamp('created_at');
 
+            $table->index('follower_id');
+            $table->index('following_id');
+
             $table->foreign('follower_id')
                 ->references('id')
                 ->on('users')
@@ -40,6 +43,8 @@ class CreateFollowersTable extends Migration
         Schema::table('followers', function (Blueprint $table) {
             $table->dropForeign('followers_following_id_foreign');
             $table->dropForeign('followers_follower_id_foreign');
+            $table->dropIndex('followers_following_id_index');
+            $table->dropIndex('followers_follower_id_index');
         });
 
         Schema::dropIfExists('followers');

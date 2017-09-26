@@ -18,8 +18,8 @@ class UsersController extends Controller
 {
     public function show(Request $request, $nickname)
     {
-        /** @var User $user */
-        $user = User::where('nickname', $nickname)->firstOrFail();
+        $user = User::where('nickname', $nickname)->withCount(['followers', 'following'])->firstOrFail();
+
         return [
             'avatar' => $user->getAvatarUrl(),
             'banner' => $user->getBannerUrl(),
@@ -27,8 +27,20 @@ class UsersController extends Controller
             'username' => $user->username,
             'can_follow' => true,
             'following' => false,
-            'following_count' => 100,
-            'followers_count' => 200,
+            'following_count' => $user->following_count,
+            'followers_count' => $user->followers_count,
         ];
+    }
+
+    public function followers(Request $request, $nickname)
+    {
+        $user = User::where('nickname', $nickname)->with('followers')->firstOrFail();
+        return $user->followers;
+    }
+
+    public function following(Request $request, $nickname)
+    {
+        $user = User::where('nickname', $nickname)->with('following')->firstOrFail();
+        return $user->following;
     }
 }
