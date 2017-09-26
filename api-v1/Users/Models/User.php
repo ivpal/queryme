@@ -90,4 +90,29 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(User::class, 'followers', 'follower_id', 'following_id');
     }
+
+    /**
+     * @param int $id
+     *
+     * @return bool
+     */
+    public function canFollow(int $id): bool
+    {
+        return !in_array($id, $this->followerIds());
+    }
+
+    public function isFollowing(int $id): bool
+    {
+        return in_array($id, $this->followerIds());
+    }
+
+    private function followerIds(): array
+    {
+        return Follower::where('follower_id', $this->id)->pluck('following_id')->all();
+    }
+
+    private function followingIds():array
+    {
+        return Follower::where('following_id', $this->id)->pluck('follower_id')->all();
+    }
 }

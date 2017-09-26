@@ -18,6 +18,9 @@ class UsersController extends Controller
 {
     public function show(Request $request, $nickname)
     {
+        /** @var User $user */
+        $currentUser = $request->user();
+
         $user = User::where('nickname', $nickname)->withCount(['followers', 'following'])->firstOrFail();
 
         return [
@@ -25,8 +28,8 @@ class UsersController extends Controller
             'banner' => $user->getBannerUrl(),
             'description' => $user->description,
             'username' => $user->username,
-            'can_follow' => true,
-            'following' => false,
+            'can_follow' => $currentUser->tokenCan('use') && $currentUser->id != $user->id && $user->canFollow($currentUser->id),
+            'following' => $currentUser->tokenCan('use') && $currentUser->id != $user->id && $user->isFollowing($currentUser->id),
             'following_count' => $user->following_count,
             'followers_count' => $user->followers_count,
         ];
