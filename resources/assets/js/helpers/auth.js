@@ -1,5 +1,5 @@
-import * as DateHelper from '../helpers/DateHelper'
-import * as User from '../services/User'
+import * as dateHelper from './date-helper'
+import * as user from './user'
 
 const AUTH_KEY = 'qmAuthentication';
 
@@ -50,27 +50,29 @@ const accessToken = () => {
 
 const isExpire = () => {
   const expiresAt = JSON.parse(localStorage.getItem(AUTH_KEY)).expiresAt;
-  return !expiresAt || new Date(expiresAt) < DateHelper.nowInUTC();
+  return !expiresAt || new Date(expiresAt) < dateHelper.nowInUTC();
 };
 
 export const setup = () => {
-  if (Queryme.token) {
-    login(Queryme.token);
+  setupAxios();
 
-    if (Queryme.user) {
-      User.store(Queryme.user);
-    }
-  } else if (!accessToken() || isExpire()) {
-    getWebAppToken();
-  }
+  // if (Queryme.token) {
+  //   login(Queryme.token);
+  //
+  //   if (Queryme.user) {
+  //     user.store(Queryme.user);
+  //   }
+  // } else if (!accessToken() || isExpire()) {
+  //   getWebAppToken();
+  // }
 };
 
 export const logout = () => {
   localStorage.removeItem(AUTH_KEY);
-  User.destroy();
+  user.destroy();
 };
 
 export const isAuth = () => {
   const qmAuth = JSON.parse(localStorage.getItem(AUTH_KEY));
-  return qmAuth && qmAuth.isLoggedIn && new Date(qmAuth.expiresAt) > DateHelper.nowInUTC()
+  return qmAuth && qmAuth.isLoggedIn && new Date(qmAuth.expiresAt) > dateHelper.nowInUTC()
 };

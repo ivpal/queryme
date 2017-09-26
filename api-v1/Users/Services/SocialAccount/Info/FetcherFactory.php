@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\SocialAccount\Info;
+namespace ApiV1\Services\SocialAccount\Info;
 
 use Laravel\Socialite\Contracts\User;
 

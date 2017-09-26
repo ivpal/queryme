@@ -2,12 +2,8 @@
   <div>
     <login-modal></login-modal>
     <nav-header></nav-header>
-    <div class="container">
-      <div class="row">
-
+    <div class="container main-container">
         <router-view></router-view>
-
-      </div>
     </div>
   </div>
 </template>
@@ -21,3 +17,13 @@ export default {
   components: { LoginModal, NavHeader }
 }
 </script>
+
+<style lang="scss">
+@import "../../sass/variables";
+
+.main-container {
+  position: relative;
+  top: $header-height;
+}
+
+</style>

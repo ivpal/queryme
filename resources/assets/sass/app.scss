@@ -18,9 +18,38 @@ li {
   list-style: none;
 }
 
+dl, dd {
+  margin: 0;
+}
+
 .container {
   position: relative;
   margin: 0 auto;
   width: 100%;
   max-width: 1140px;
+}
+
+button {
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all .3s;
+  outline: 0;
+  background: transparent;
+}
+
+.btn {
+  padding: .5rem 1.2rem;
+  font-size: 1.2rem;
+  border: 1px solid;
+}
+
+.btn-main {
+  border-color: $main;
+  color: $main;
+}
+
+.btn-done {
+  background: #eceff1;
+  color: #78909c;
+  border-color: #eceff1;
 }

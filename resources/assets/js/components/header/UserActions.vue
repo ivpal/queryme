@@ -24,8 +24,8 @@
 </template>
 
 <script>
-import * as Auth from '../../services/Auth'
-import { getAvatarUrl, getNickname, getUsername } from '../../services/User'
+import * as auth from '../../helpers/auth'
+import { getAvatarUrl, getNickname, getUsername } from '../../helpers/user'
 
 export default {
   data() {
@@ -41,7 +41,7 @@ export default {
       this.showDropdown = !this.showDropdown;
     },
     logout() {
-      Auth.logout();
+      auth.logout();
       window.location.replace('/');
     }
   }

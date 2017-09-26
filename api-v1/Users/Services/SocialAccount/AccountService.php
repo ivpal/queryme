@@ -6,7 +6,7 @@ use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Contracts\User as ProviderUser;
 
 use ApiV1\Models\User;
-use App\Services\SocialAccount\Info\FetcherFactory;
+use ApiV1\Services\SocialAccount\Info\FetcherFactory;
 
 /**
  * Class UserService

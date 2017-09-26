@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services\SocialAccount\Info;
+namespace ApiV1\Services\SocialAccount\Info;
 
 use Webpatser\Uuid\Uuid;
 use Illuminate\Support\Facades\Storage;
 
-use App\Clients\Social;
+use Core\Clients\Social;
 
 /**
  * Class Fetcher
