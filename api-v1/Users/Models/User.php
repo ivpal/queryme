@@ -21,6 +21,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property int vk_id
  * @property int ok_id
  * @property int facebook_id
+ * @property User[] followers
+ * @property User[] following
  * @property Question[] questions
  * @property Reply[] replies
  * @property Carbon created_at
@@ -69,5 +71,21 @@ class User extends Authenticatable
     public function getBannerUrl(): ?string
     {
         return $this->banner ? env('APP_URL') . '/storage/banners/' . $this->banner : null;
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'followers', 'follower_id', 'following_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function following()
+    {
+        return $this->belongsToMany(User::class, 'followers', 'following_id', 'follower_id');
     }
 }

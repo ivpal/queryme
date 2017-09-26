@@ -20,7 +20,7 @@
           <button class="btn btn-done" v-if="following">Читаю</button>
         </div>
 
-        <div class="description">
+        <div class="description" v-if="description">
           <span>{{ description }}</span>
         </div>
       </div>
