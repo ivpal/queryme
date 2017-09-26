@@ -59,7 +59,7 @@ export default {
   left: 0;
   right: 0;
   transition: all .2s;
-  border-bottom: 1px solid #f1f1f1;
+  border-bottom: 1px solid #eaeaea;
 
   .container {
     height: 100%;

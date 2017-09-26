@@ -11,10 +11,20 @@
         <h1>
           <router-link :to="{ name: 'user', params: { nickname } }">{{ username }}</router-link>
         </h1>
-        <div>
-          <router-link :to="{ name: 'user', params: { nickname } }">{{ nickname }}</router-link>
+        <div class="nickname">
+          <router-link :to="{ name: 'user', params: { nickname } }">@{{ nickname }}</router-link>
+        </div>
+
+        <div class="user-actions">
+          <button class="btn btn-main" v-if="canFollow">Читать</button>
+          <button class="btn btn-done" v-if="following">Читаю</button>
+        </div>
+
+        <div class="description">
+          <span>{{ description }}</span>
         </div>
       </div>
+
     </div>
   </div>
 </template>
@@ -28,9 +38,11 @@ export default {
       avatar: '',
       username: '',
       description: '',
-      following_count: 0,
-      followers_count: 0,
+      followingCount: 0,
+      followersCount: 0,
       nickname: this.$route.params.nickname,
+      canFollow: false,
+      following: false,
       bannerStyle: {
         backgroundImage: ''
       }
@@ -43,8 +55,10 @@ export default {
         this.avatar = data.avatar;
         this.username = data.username;
         this.description = data.description;
-        this.following_count = data.following_count;
-        this.followers_count = data.followers_count;
+        this.followingCount = data.following_count;
+        this.followersCount = data.followers_count;
+        this.canFollow = data.can_follow;
+        this.following = data.following;
         this.bannerStyle.backgroundImage = `url(${data.banner})`;
       })
       .catch(error => { console.log(error) })
@@ -63,9 +77,10 @@ export default {
   width: 360px;
   flex-grow: 0;
   background: #fff;
-  border-radius: 3px;
+  border-radius: 2px;
   position: relative;
   box-shadow: 0 1px 4px rgba(0, 0, 0, .1);
+  padding-bottom: 1rem;
 }
 
 .banner {
@@ -91,38 +106,35 @@ export default {
   }
 }
 
-/*.banner {
-  height: $banner-height;
-  overflow: hidden;
-  text-align: center;
+.user-data {
+  padding-top: 3.4rem;
+  padding-left: 1rem;
 
-  img {
-    width: 100%;
+  h1 {
+    margin: 0;
+    font-size: 1.5rem;
+
+    a {
+      color: #333;
+    }
+  }
+
+  .nickname {
+    margin-top: 0.6rem;
+  }
+
+  .user-actions {
+    margin-top: 1.4rem;
+  }
+
+  .description {
+    margin-top: 1rem;
+
+    span {
+      color: #424242;
+      font-size: 1.1rem;
+    }
   }
 }
 
-.user-profile {
-  position: absolute;
-  display: flex;
-  top: 28%;
-  left: 20%;
-  color: #fff;
-}
-
-.user-info {
-  margin-left: 1.5rem;
-}
-
-.user-stats {
-  dl {
-    display: inline-block;
-    text-align: center;
-  }
-}
-
-.avatar {
-  img {
-    border: 2px solid #fff;
-  }
-}*/
 </style>
