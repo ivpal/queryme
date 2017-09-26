@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ApiV1\Models;
 
+use ApiV1\Users\Exceptions\UserNotFoundException;
 use Carbon\Carbon;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -109,6 +110,22 @@ class User extends Authenticatable
     public function isFollowing(User $user): bool
     {
         return $this->tokenCan('use') && $user->id != $this->id && in_array($user->id, $this->followerIds());
+    }
+
+    /**
+     * @param string $nickname
+     * @return User
+     *
+     * @throws UserNotFoundException
+     */
+    public static function getByNickname(string $nickname): User
+    {
+        $user = static::where('nickname', $nickname)->first();
+        if (!$user) {
+            throw new UserNotFoundException();
+        }
+
+        return $user;
     }
 
     /**

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ApiV1\Models;
 
 use Carbon\Carbon;

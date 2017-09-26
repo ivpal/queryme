@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ApiV1\Users\Controllers;
 
 use Illuminate\Http\Request;
@@ -11,6 +13,7 @@ use ApiV1\Models\{
 use Core\Http\Controllers\ApiController;
 
 // TODO: right responses and status codes
+// TODO: handle errors
 
 /**
  * Class FollowersController
@@ -30,13 +33,13 @@ class FollowersController extends ApiController
 
     public function index(Request $request, $nickname)
     {
-        $user = User::where('nickname', $nickname)->firstOrFail();
+        $user = User::getByNickname($nickname);
         return $user->followers;
     }
 
     public function store(Request $request, $nickname)
     {
-        $user = User::where('nickname', $nickname)->firstOrFail();
+        $user = User::getByNickname($nickname);
 
         if ($this->currentUser->canFollow($user)) {
             Follower::create([
@@ -48,7 +51,7 @@ class FollowersController extends ApiController
 
     public function destroy(Request $request, $nickname)
     {
-        $user = User::where('nickname', $nickname)->firstOrFail();
+        $user = User::getByNickname($nickname);
 
         if ($this->currentUser->isFollowing($user)) {
             Follower::where([

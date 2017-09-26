@@ -6,7 +6,7 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
-use ApiV1\Users\Exceptions\UserNotFoundException;
+use Symfony\Component\HttpFoundation\Response;
 
 class Handler extends ExceptionHandler
 {
@@ -46,10 +46,6 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if ($exception instanceof UserNotFoundException) {
-            return response()->view('errors.user_not_found', [], 404);
-        }
-
         return parent::render($request, $exception);
     }
 
@@ -62,12 +58,6 @@ class Handler extends ExceptionHandler
      */
     protected function unauthenticated($request, AuthenticationException $exception)
     {
-//        if ($request->expectsJson()) {
-//            return response()->json(['error' => 'Unauthenticated.'], 401);
-//        }
-//
-//        return redirect()->guest(route('login'));
-
-        return response()->json(['error' => 'Unauthenticated.'], 401);
+        return response()->json(['errors' => ['message' => 'Unauthenticated.']], Response::HTTP_UNAUTHORIZED);
     }
 }
