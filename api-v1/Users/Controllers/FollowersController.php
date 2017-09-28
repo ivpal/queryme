@@ -14,6 +14,7 @@ use Core\Http\Controllers\ApiController;
 
 // TODO: right responses and status codes
 // TODO: handle errors
+// TODO: follow exceptions
 
 /**
  * Class FollowersController

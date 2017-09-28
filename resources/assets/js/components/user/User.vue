@@ -24,8 +24,9 @@
           <span>{{ description }}</span>
         </div>
       </div>
-
     </div>
+
+    <router-view></router-view>
   </div>
 </template>
 
@@ -107,8 +108,10 @@ export default {
 }
 
 .user-data {
-  padding-top: 3.4rem;
-  padding-left: 1rem;
+  padding-top: 2.4rem;
+  margin-left: 1.2rem;
+  margin-right: 1.2rem;
+  margin-top: 1rem;
 
   h1 {
     margin: 0;

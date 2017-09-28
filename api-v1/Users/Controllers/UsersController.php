@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ApiV1\Users\Controllers;
 
+use ApiV1\Repositories\UserRepository;
 use ApiV1\Users\Exceptions\UserNotFoundException;
 use Illuminate\Http\Request;
 
@@ -22,12 +23,14 @@ class UsersController extends ApiController
         parent::__construct($request);
     }
 
-    public function show(Request $request, string $nickname)
+    public function show(Request $request, UserRepository $repository, string $nickname)
     {
-        $user = User::where('nickname', $nickname)->withCount(['followers', 'following'])->first();
-        if (!$user) {
-            throw new UserNotFoundException();
-        }
+//        $user = User::where('nickname', $nickname)->withCount(['followers', 'following'])->first();
+//        if (!$user) {
+//            throw new UserNotFoundException();
+//        }
+
+        $user = $repository->getByNickname($nickname);
 
         return [
             'avatar' => $user->getAvatarUrl(),
