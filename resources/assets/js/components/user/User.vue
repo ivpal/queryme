@@ -165,7 +165,6 @@ export default {
 
 .user-content {
   flex-grow: 1;
-  max-width: 764px;
   margin-left: 16px;
 }
 

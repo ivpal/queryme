@@ -17,17 +17,13 @@ class CreateQuestionsTable extends Migration
             $table->increments('id');
             $table->text('content');
             $table->integer('user_id')->unsigned();
-            $table->integer('category_id')->unsigned();
             $table->timestamps();
+
+            $table->index(['user_id']);
 
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
-                ->onDelete('cascade');
-
-            $table->foreign('category_id')
-                ->references('id')
-                ->on('categories')
                 ->onDelete('cascade');
         });
     }
@@ -40,8 +36,8 @@ class CreateQuestionsTable extends Migration
     public function down()
     {
         Schema::table('questions', function (Blueprint $table) {
-            $table->dropForeign('questions_category_id_foreign');
             $table->dropForeign('questions_user_id_foreign');
+            $table->dropIndex(['user_id']);
         });
 
         Schema::dropIfExists('questions');

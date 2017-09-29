@@ -20,6 +20,9 @@ class CreateRepliesTable extends Migration
             $table->integer('question_id')->unsigned();
             $table->timestamps();
 
+            $table->index(['user_id']);
+            $table->index(['question_id']);
+
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
@@ -42,6 +45,8 @@ class CreateRepliesTable extends Migration
         Schema::table('replies', function (Blueprint $table) {
             $table->dropForeign('replies_question_id_foreign');
             $table->dropForeign('replies_user_id_foreign');
+            $table->dropIndex(['question_id']);
+            $table->dropIndex(['user_id']);
         });
 
         Schema::dropIfExists('replies');

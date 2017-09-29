@@ -43,8 +43,8 @@ class CreateFollowersTable extends Migration
         Schema::table('followers', function (Blueprint $table) {
             $table->dropForeign('followers_following_id_foreign');
             $table->dropForeign('followers_follower_id_foreign');
-            $table->dropIndex('followers_following_id_index');
-            $table->dropIndex('followers_follower_id_index');
+            $table->dropIndex(['following_id']);
+            $table->dropIndex(['follower_id']);
         });
 
         Schema::dropIfExists('followers');

@@ -24,8 +24,7 @@
             "database"
         ],
         "psr-4": {
-            "Core\\": "core/",
-            "ApiV1\\": "api-v1/"
+            "App\\": "app/"
         }
     },
     "autoload-dev": {
