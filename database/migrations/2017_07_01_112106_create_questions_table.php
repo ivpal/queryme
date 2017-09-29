@@ -37,7 +37,6 @@ class CreateQuestionsTable extends Migration
     {
         Schema::table('questions', function (Blueprint $table) {
             $table->dropForeign('questions_user_id_foreign');
-            $table->dropIndex(['user_id']);
         });
 
         Schema::dropIfExists('questions');
