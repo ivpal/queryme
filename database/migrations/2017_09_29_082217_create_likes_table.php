@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateQuestionsTable extends Migration
+class CreateLikesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateQuestionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('questions', function (Blueprint $table) {
-            $table->increments('id');
-            $table->text('content');
-            $table->boolean('anonymous')->default(false);
+        Schema::create('likes', function (Blueprint $table) {
             $table->integer('user_id')->unsigned();
-            $table->timestamps();
+            $table->integer('likable_id')->unsigned();
+            $table->string('likable_type');
+            $table->timestamp('created_at');
 
             $table->index(['user_id']);
+            $table->index(['likable_id']);
 
             $table->foreign('user_id')
                 ->references('id')
@@ -36,11 +36,12 @@ class CreateQuestionsTable extends Migration
      */
     public function down()
     {
-        Schema::table('questions', function (Blueprint $table) {
-            $table->dropForeign('questions_user_id_foreign');
+        Schema::table('likes', function (Blueprint $table) {
+            $table->dropForeign('likes_user_id_foreign');
+            $table->dropIndex(['likable_id']);
             $table->dropIndex(['user_id']);
         });
 
-        Schema::dropIfExists('questions');
+        Schema::drop('likes');
     }
 }
