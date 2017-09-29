@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Core\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 /**
@@ -15,6 +16,9 @@ abstract class Repository
 {
     /** @var Model */
     protected $model;
+
+    /** @var Builder */
+    protected $query;
 
     /** @var ModelNotFoundException */
     protected $notFoundException;

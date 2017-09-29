@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace ApiV1\Users\Controllers;
 
-use ApiV1\Repositories\UserRepository;
-use ApiV1\Users\Exceptions\UserNotFoundException;
 use Illuminate\Http\Request;
 
+use ApiV1\Repositories\UserRepository;
 use Core\Http\Controllers\ApiController;
-
-use ApiV1\Models\User;
 
 /**
  * Class UsersController
@@ -25,12 +22,7 @@ class UsersController extends ApiController
 
     public function show(Request $request, UserRepository $repository, string $nickname)
     {
-//        $user = User::where('nickname', $nickname)->withCount(['followers', 'following'])->first();
-//        if (!$user) {
-//            throw new UserNotFoundException();
-//        }
-
-        $user = $repository->getByNickname($nickname);
+        $user = $repository->getByNickname($nickname)->withCount(['followers', 'following'])->first();
 
         return [
             'avatar' => $user->getAvatarUrl(),
@@ -41,6 +33,9 @@ class UsersController extends ApiController
             'following' => $this->currentUser->isFollowing($user),
             'following_count' => $user->following_count,
             'followers_count' => $user->followers_count,
+            'reply_count' => 0,
+            'likes_count' => 0,
+            'questions_count' => 0,
         ];
     }
 }

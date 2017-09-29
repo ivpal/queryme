@@ -26,7 +26,24 @@
       </div>
     </div>
 
-    <router-view></router-view>
+    <div class="user-content">
+      <div class="user-navigation">
+
+        <div class="user-links">
+          <a href="#">Ответы {{ replyCount }}</a>
+          <a href="#">Вопросы {{ questionsCount }}</a>
+          <a href="#">Нравится {{ likesCount }}</a>
+        </div>
+
+        <div class="user-sort">
+          <a href="#">Популярные</a>
+          <a href="#">Последние</a>
+        </div>
+
+      </div>
+      <router-view></router-view>
+    </div>
+
   </div>
 </template>
 
@@ -39,6 +56,9 @@ export default {
       avatar: '',
       username: '',
       description: '',
+      replyCount: 0,
+      likesCount: 0,
+      questionsCount: 0,
       followingCount: 0,
       followersCount: 0,
       nickname: this.$route.params.nickname,
@@ -58,6 +78,9 @@ export default {
         this.description = data.description;
         this.followingCount = data.following_count;
         this.followersCount = data.followers_count;
+        this.likesCount = data.likes_count;
+        this.replyCount = data.reply_count;
+        this.questionsCount = data.questions_count;
         this.canFollow = data.can_follow;
         this.following = data.following;
         this.bannerStyle.backgroundImage = `url(${data.banner})`;
@@ -80,7 +103,7 @@ export default {
   background: #fff;
   border-radius: 2px;
   position: relative;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, .1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
   padding-bottom: 1rem;
 }
 
@@ -138,6 +161,28 @@ export default {
       font-size: 1.1rem;
     }
   }
+}
+
+.user-content {
+  flex-grow: 1;
+  max-width: 764px;
+  margin-left: 16px;
+}
+
+.user-navigation {
+  padding: 1rem;
+  background: #fff;
+  box-shadow: 0 0 3px 0 rgba(0,0,0,.1);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  border-radius: 0 0 3px 3px;
+  font-size: 1.2rem;
+}
+
+.user-links a,
+.user-sort a:first-child {
+  margin-right: 1rem;
 }
 
 </style>

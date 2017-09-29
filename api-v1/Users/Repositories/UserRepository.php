@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace ApiV1\Repositories;
 
-use ApiV1\Models\User;
-use ApiV1\Users\Exceptions\UserNotFoundException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+
+use ApiV1\Models\User;
+use ApiV1\Users\Exceptions\UserNotFoundException;
 
 use Core\Repositories\Repository;
 
@@ -17,15 +18,34 @@ use Core\Repositories\Repository;
  */
 class UserRepository extends Repository
 {
-    public function getByNickname(string $nickname): User
+    public function getByNickname(string $nickname): UserRepository
     {
-        $user = $this->createQueryBuilder()
-            ->whereNickname($nickname)
-            ->first();
+        $this->query = $this->createQueryBuilder()
+            ->whereNickname($nickname);
+
+        return $this;
+    }
+
+    /**
+     * @return User
+     * @throws UserNotFoundException
+     */
+    public function first(): User
+    {
+        /** @var User $user */
+        $user = $this->query->first();
 
         if (!$user) {
             throw new $this->notFoundException;
         }
+
+        return $user;
+    }
+
+    public function withCount(array $relations): UserRepository
+    {
+        $this->query->withCount($relations);
+        return $this;
     }
 
     protected function getModel(): Model
