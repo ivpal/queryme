@@ -21,26 +21,29 @@ class UsersController extends ApiController
         parent::__construct($request);
     }
 
-    public function show(Request $request, string $nickname)
+    public function show(string $nickname)
     {
         /** @var User $user */
-        $user = User::whereNickname($nickname)->withCount(['followers', 'following'])->first();
+        $user = User::whereNickname($nickname)
+            ->withCount(['followers', 'following', 'questions', 'replies'])
+            ->first();
+
         if (!$user) {
             throw new UserNotFoundException();
         }
 
         return [
-            'avatar' => $user->getAvatarUrl(),
-            'banner' => $user->getBannerUrl(),
-            'description' => $user->description,
-            'username' => $user->username,
-            'can_follow' => $this->currentUser->canFollow($user),
-            'following' => $this->currentUser->isFollowing($user),
+            'avatar'          => $user->getAvatarUrl(),
+            'banner'          => $user->getBannerUrl(),
+            'username'        => $user->username,
+            'following'       => $this->currentUser->isFollowing($user),
+            'can_follow'      => $this->currentUser->canFollow($user),
+            'likes_count'     => 0,
+            'description'     => $user->description,
+            'replies_count'   => $user->replies_count,
             'following_count' => $user->following_count,
             'followers_count' => $user->followers_count,
-            'reply_count' => 0,
-            'likes_count' => 0,
-            'questions_count' => 0,
+            'questions_count' => $user->questions_count,
         ];
     }
 }

@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int id
  * @property string content
  * @property int user_id
- * @property int category_id
  * @property User user
  * @property Reply[] replies
  * @property Carbon created_at

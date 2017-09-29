@@ -8,9 +8,8 @@ use Illuminate\Http\Response;
 use Laravel\Socialite\Facades\Socialite;
 
 use App\Services\Token\TokenFactory;
-use Core\Http\Controllers\Controller;
-
-use App\Users\Services\SocialAccount\AccountService;
+use App\Http\Controllers\Controller;
+use App\Services\SocialAccount\AccountService;
 
 /**
  * Class SocialController

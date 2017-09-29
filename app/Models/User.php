@@ -25,8 +25,6 @@ use App\Exceptions\UserNotFoundException;
  * @property int facebook_id
  * @property User[] followers
  * @property User[] following
- * @property int followers_count
- * @property int following_count
  * @property [] questions
  * @property Reply[] replies
  * @property Carbon created_at

@@ -11,41 +11,42 @@ use App\Models\{
     Follower
 };
 use App\Http\Controllers\ApiController;
+use App\Exceptions\UserNotFoundException;
 
 // TODO: right responses and status codes
-// TODO: handle errors
-// TODO: follow exceptions
 
 /**
  * Class FollowersController
- * @package ApiV1\Users\Controllers
+ * @package App\Http\Controllers\Api\V1
  */
 class FollowersController extends ApiController
 {
-    /** @var UserRepository */
-    private $repository;
-
     /**
      * FollowersController constructor.
      *
      * @param Request $request
-     * @param UserRepository $repository
      */
-    public function __construct(Request $request, UserRepository $repository)
+    public function __construct(Request $request)
     {
         parent::__construct($request);
-        $this->repository = $repository;
     }
 
     public function index(Request $request, $nickname)
     {
-        $user = $this->repository->getByNickname($nickname)->with(['followers'])->first();
+        $user = User::whereNickname($nickname)->with('followers')->first();
+        if (!$user) {
+            throw new UserNotFoundException();
+        }
+
         return $user->followers;
     }
 
     public function store(Request $request, $nickname)
     {
-        $user = $this->repository->getByNickname($nickname)->first();
+        $user = User::whereNickname($nickname)->first();
+        if (!$user) {
+            throw new UserNotFoundException();
+        }
 
         if ($this->currentUser->canFollow($user)) {
             Follower::create([
@@ -57,7 +58,10 @@ class FollowersController extends ApiController
 
     public function destroy(Request $request, $nickname)
     {
-        $user = User::getByNickname($nickname);
+        $user = User::whereNickname($nickname)->first();
+        if (!$user) {
+            throw new UserNotFoundException();
+        }
 
         if ($this->currentUser->isFollowing($user)) {
             Follower::where([
@@ -69,7 +73,11 @@ class FollowersController extends ApiController
 
     public function following(Request $request, $nickname)
     {
-        $user = User::where('nickname', $nickname)->with('following')->firstOrFail();
+        $user = User::whereNickname($nickname)->with('following')->first();
+        if (!$user) {
+            throw new UserNotFoundException();
+        }
+
         return $user->following;
     }
 }

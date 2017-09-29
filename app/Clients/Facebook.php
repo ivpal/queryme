@@ -67,7 +67,7 @@ class Facebook implements Social
         ]);
 
         $responseData = json_decode($response->getBody()->getContents(), true);
-        return array_get($responseData, 'cover.source');
+        return htmlspecialchars_decode(array_get($responseData, 'cover.source'));
     }
 
     /**
