@@ -23,7 +23,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property int facebook_id
  * @property User[] followers
  * @property User[] following
- * @property [] questions
+ * @property Question[] questions
+ * @property Question[] likedQuestions
  * @property Reply[] replies
  * @property Carbon created_at
  * @property Carbon updated_at
@@ -87,6 +88,11 @@ class User extends Authenticatable
     public function following()
     {
         return $this->belongsToMany(User::class, 'followers', 'follower_id', 'following_id');
+    }
+
+    public function likedQuestions()
+    {
+        return $this->morphedByMany(Question::class, 'likable', 'likes');
     }
 
     /**

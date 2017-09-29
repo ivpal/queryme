@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int user_id
  * @property Question question
  * @property User user
+ * @property User[] likes
  * @property Carbon created_at
  * @property Carbon updated_at
  */
@@ -39,6 +40,6 @@ class Reply extends Model
 
     public function likes()
     {
-        return $this->morphMany(Like::class, 'likable');
+        return $this->morphToMany(User::class, 'likable');
     }
 }

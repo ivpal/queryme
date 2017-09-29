@@ -13,8 +13,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property int id
  * @property string content
  * @property int user_id
- * @property User user
  * @property Reply[] replies
+ * @property User user
+ * @property User[] likes
  * @property Carbon created_at
  * @property Carbon updated_at
  */
@@ -36,11 +37,8 @@ class Question extends Model
         return $this->hasMany(Reply::class);
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
-     */
     public function likes()
     {
-        return $this->morphMany(Like::class, 'likable');
+        return $this->morphToMany(User::class, 'likable');
     }
 }

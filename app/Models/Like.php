@@ -13,10 +13,18 @@ use Illuminate\Database\Eloquent\Model;
 class Like extends Model
 {
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
-    public function likable()
+    public function questions()
     {
-        return $this->morphTo();
+        return $this->morphedByMany(Question::class, 'likable');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     */
+    public function replies()
+    {
+        return $this->morphedByMany(Reply::class, 'likable');
     }
 }
