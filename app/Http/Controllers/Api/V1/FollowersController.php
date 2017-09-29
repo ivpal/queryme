@@ -10,9 +10,13 @@ use App\Models\{
     User,
     Follower
 };
-use App\Exceptions\FollowException;
+
+use App\Exceptions\{
+    FollowException,
+    UserNotFoundException
+};
+
 use App\Http\Controllers\ApiController;
-use App\Exceptions\UserNotFoundException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

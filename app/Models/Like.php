@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -12,6 +13,13 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Like extends Model
 {
+    /** @var bool */
+    public $timestamps = false;
+
+    public function setCreatedAtAttribute()
+    {
+        $this->attributes['created_at'] = Carbon::now();
+    }
     /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
