@@ -19,7 +19,5 @@ Route::namespace('Api')->group(function () {
                     Route::post('{nickname}/followers', 'FollowersController@store');
                     Route::delete('{nickname}/followers', 'FollowersController@destroy');
                 });
-
-
         });
 });

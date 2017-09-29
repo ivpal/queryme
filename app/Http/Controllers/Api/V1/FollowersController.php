@@ -10,10 +10,10 @@ use App\Models\{
     User,
     Follower
 };
+use App\Exceptions\FollowException;
 use App\Http\Controllers\ApiController;
 use App\Exceptions\UserNotFoundException;
-
-// TODO: right responses and status codes
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class FollowersController
@@ -53,7 +53,11 @@ class FollowersController extends ApiController
                 'follower_id'  => $this->currentUser->id,
                 'following_id' => $user->id,
             ]);
+
+            return response('', Response::HTTP_CREATED);
         }
+
+        throw new FollowException('You could not follow this user.');
     }
 
     public function destroy(Request $request, $nickname)
@@ -68,7 +72,11 @@ class FollowersController extends ApiController
                 'follower_id' => $this->currentUser->id,
                 'following_id' => $user->id,
             ])->delete();
+
+            return response();
         }
+
+        throw new FollowException('You could not delete following for this user.');
     }
 
     public function following(Request $request, $nickname)
