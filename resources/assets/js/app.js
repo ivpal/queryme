@@ -9,6 +9,9 @@ import App from './components/App.vue'
 // TODO: сделать ленивую загрузку компонентов
 
 import User from './components/user/User.vue'
+import UserReplies from './components/user/UserReplies.vue'
+import UserQuestions from './components/user/UserQuestions.vue'
+import LikedQuestions from './components/user/LikedQuestions.vue'
 
 Vue.component('user', User);
 
@@ -19,7 +22,25 @@ Vue.use(vmodal);
 const router = new VueRouter({
   // mode: 'history',
   routes: [
-    { path: '/:nickname', component: User, name: 'user' }
+    { path: '/:nickname', component: User,
+      children: [
+        {
+          path: '',
+          name: 'userHome',
+          component: UserReplies
+        },
+        {
+          path: 'questions',
+          name: 'userQuestions',
+          component: UserQuestions
+        },
+        {
+          path: 'likes',
+          name: 'userLikedQuestions',
+          component: LikedQuestions
+        }
+      ]
+    }
   ]
 });
 

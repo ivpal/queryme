@@ -2,17 +2,17 @@
   <div class="user">
     <div class="user-profile">
       <div class="banner">
-        <router-link :to="{ name: 'user', params: { nickname } }" :style="bannerStyle" class="banner-link"></router-link>
-        <router-link :to="{ name: 'user', params: { nickname } }" class="avatar-link">
+        <router-link :to="{ name: 'userHome', params: { nickname } }" :style="bannerStyle" class="banner-link"></router-link>
+        <router-link :to="{ name: 'userHome', params: { nickname } }" class="avatar-link">
           <img class="avatar-96 round-image" :src="avatar">
         </router-link>
       </div>
       <div class="user-data">
         <h1>
-          <router-link :to="{ name: 'user', params: { nickname } }">{{ username }}</router-link>
+          <router-link :to="{ name: 'userHome', params: { nickname } }">{{ username }}</router-link>
         </h1>
         <div class="nickname">
-          <router-link :to="{ name: 'user', params: { nickname } }">@{{ nickname }}</router-link>
+          <router-link :to="{ name: 'userHome', params: { nickname } }">@{{ nickname }}</router-link>
         </div>
 
         <div class="user-actions">
@@ -30,14 +30,14 @@
       <div class="user-navigation">
 
         <div class="user-links">
-          <a href="#">Ответы {{ replyCount }}</a>
-          <a href="#">Вопросы {{ questionsCount }}</a>
-          <a href="#">Нравится {{ likesCount }}</a>
+          <router-link :to="{ name: 'userHome' }">Ответы {{ repliesCount }}</router-link>
+          <router-link :to="{ name: 'userQuestions' }">Вопросы {{ questionsCount }}</router-link>
+          <router-link :to="{ name: 'userLikedQuestions' }">Нравится {{ likedCount }}</router-link>
         </div>
 
         <div class="user-sort">
-          <a href="#">Популярные</a>
           <a href="#">Последние</a>
+          <a href="#">Популярные</a>
         </div>
 
       </div>
@@ -56,31 +56,36 @@ export default {
       avatar: '',
       username: '',
       description: '',
-      replyCount: 0,
+      repliesCount: 0,
       likesCount: 0,
       questionsCount: 0,
       followingCount: 0,
       followersCount: 0,
+      likedCount: 0,
       nickname: this.$route.params.nickname,
       canFollow: false,
       following: false,
       bannerStyle: {
         backgroundImage: ''
-      }
+      },
     }
   },
   mounted() {
+
     user.getInfo(this.$route.params.nickname)
       .then(response => {
         const data = response.data;
+
+        // TODO: use camel case and object assign
         this.avatar = data.avatar;
         this.username = data.username;
         this.description = data.description;
         this.followingCount = data.following_count;
         this.followersCount = data.followers_count;
         this.likesCount = data.likes_count;
-        this.replyCount = data.reply_count;
+        this.repliesCount = data.replies_count;
         this.questionsCount = data.questions_count;
+        this.likedCount = data.liked_questions_count;
         this.canFollow = data.can_follow;
         this.following = data.following;
         this.bannerStyle.backgroundImage = `url(${data.banner})`;
@@ -104,7 +109,6 @@ export default {
   border-radius: 2px;
   position: relative;
   box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
-  padding-bottom: 1rem;
 }
 
 .banner {
@@ -182,6 +186,12 @@ export default {
 .user-links a,
 .user-sort a:first-child {
   margin-right: 1rem;
+}
+
+.user-links {
+  a.router-link-exact-active {
+    color: $brand-primary;
+  }
 }
 
 </style>

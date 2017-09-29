@@ -6,7 +6,7 @@
     <div class="dropdown-menu" v-if="showDropdown">
       <ul class="user-dropdown-toggle">
         <li class="user-info">
-          <router-link :to="{ name: 'user', params: { nickname } }">
+          <router-link :to="{ name: 'userHome', params: { nickname } }">
             <span class="username">{{ username }}</span>
             <p class="nickname">@{{ nickname }}</p>
           </router-link>
