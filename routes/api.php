@@ -7,11 +7,19 @@ Route::namespace('Api')->group(function () {
         ->namespace('V1')
         ->middleware('auth:api')
         ->group(function () {
-            Route::get('users/{nickname}', 'UsersController@show');
+            Route::prefix('users')
+                ->group(function () {
+                    Route::get('{nickname}', 'UsersController@show');
+                    Route::get('{nickname}/replies', 'RepliesController@indexForUser');
+                    Route::get('{nickname}/questions', 'QuestionsController@indexForUser');
+                    Route::get('{nickname}/likes', 'LikesController@indexForUser');
 
-            Route::get('users/{nickname}/followers', 'FollowersController@index');
-            Route::get('users/{nickname}/following', 'FollowersController@following');
-            Route::post('users/{nickname}/followers', 'FollowersController@store');
-            Route::delete('users/{nickname}/followers', 'FollowersController@destroy');
+                    Route::get('{nickname}/followers', 'FollowersController@index');
+                    Route::get('{nickname}/following', 'FollowersController@following');
+                    Route::post('{nickname}/followers', 'FollowersController@store');
+                    Route::delete('{nickname}/followers', 'FollowersController@destroy');
+                });
+
+
         });
 });

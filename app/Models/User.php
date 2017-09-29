@@ -9,8 +9,6 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-use App\Exceptions\UserNotFoundException;
-
 /**
  * Class User
  * @package App\Models
@@ -116,7 +114,7 @@ class User extends Authenticatable
      */
     private function followerIds(): array
     {
-        return Follower::where('follower_id', $this->id)->pluck('following_id')->all();
+        return Follower::whereFollowerId($this->id)->pluck('following_id')->all();
     }
 
     /**
@@ -124,6 +122,6 @@ class User extends Authenticatable
      */
     private function followingIds():array
     {
-        return Follower::where('following_id', $this->id)->pluck('follower_id')->all();
+        return Follower::whereFollowingId($this->id)->pluck('follower_id')->all();
     }
 }
