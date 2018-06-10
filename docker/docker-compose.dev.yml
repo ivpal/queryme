@@ -1,0 +1,32 @@
+version: '3'
+services:
+  app:
+    restart: always
+    build: ./app
+    volumes:
+      - ../:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file: env.dev
+    command: python3 manage.py runserver 0:8000
+    networks:
+      - local
+
+  db:
+    image: postgres:10
+    env_file: env.dev
+    volumes:
+      - simple_volume:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - local
+
+volumes:
+  simple_volume:
+
+networks:
+  local:
+    driver: bridge
