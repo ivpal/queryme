@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class Profile(models.Model):
     avatar = models.CharField(max_length=22, null=True)
     banner = models.CharField(max_length=22, null=True)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
     facebook_id = models.BigIntegerField(null=True)
     updated_at = models.DateTimeField(auto_now_add=True)
 
