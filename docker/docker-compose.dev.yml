@@ -18,14 +18,14 @@ services:
     image: postgres:10
     env_file: env.dev
     volumes:
-      - simple_volume:/var/lib/postgresql/data
+      - queryme_db_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     networks:
       - local
 
 volumes:
-  simple_volume:
+  queryme_db_data:
 
 networks:
   local:
